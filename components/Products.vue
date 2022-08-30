@@ -30,7 +30,7 @@
           <i class="far fa-heart" />
         </span>
       </div>
-      <div class=" icon_product  mx-4 top-16 my-1 item_hover" :title="quickView">
+      <div class=" icon_product  mx-4 top-16 my-1 item_hover" :title="quickView" @click="showQuickView">
         <i class="fa-solid fa-expand" />
       </div>
       <div class=" icon_product  mx-4 top-28 my-2 item_hover" title="100 views">
@@ -146,14 +146,18 @@
         </div>
       </div>
     </div> -->
+    <quick-view ref="quickModal" />
   </div>
 </template>
 
 <script>
+import QuickView from '@/components/modal/QuickView.vue'
 export default {
   name: 'Products',
+  components: {
+    QuickView
+  },
   props: ['product', 'detail'],
-
   data () {
     return {
       addToCartLabel: 'Add To Cart',
@@ -184,6 +188,9 @@ export default {
   },
 
   methods: {
+    showQuickView () {
+      this.$refs.quickModal.showModal()
+    },
     addToCart (id) {
       if (this.isUserLogged) {
         const data = {

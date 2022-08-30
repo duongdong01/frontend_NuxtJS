@@ -168,15 +168,22 @@ export default {
     closeModal () {
       this.$store.commit('showLoginModal', false)
     },
-    checkForm (e) {
+    async checkForm (e) {
       e.preventDefault()
-
-      if (this.email && this.password) {
+      // alert('thanh cong')
+      // eslint-disable-next-line no-unused-expressions
+      await this.$api.auth.signin(this.email, this.password).then(() => {
+        console.log(this.email)
+        alert('thanh cong')
+        console.log('thanh cong')
+        this.isFormSuccess = true
+      }).catch((error) => {
+        console.log('loi', error)
         this.highlightEmailWithError = false
         this.highlightPasswordWithError = false
-        this.isFormSuccess = true
-        this.$store.commit('isUserLoggedIn', this.isFormSuccess)
-      }
+      })
+
+      // this.$store.commit('isUserLoggedIn', this.isFormSuccess)
 
       if (!this.email) {
         this.highlightEmailWithError = true

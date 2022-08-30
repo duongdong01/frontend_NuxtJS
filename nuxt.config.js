@@ -1,10 +1,13 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  // ssr: false,
+  ssr: false,
   // router: {
   //   base: '/Vuemmerce/'
   // },
   // Global page headers: https://go.nuxtjs.dev/config-head
+  server: {
+    port: 8080
+  },
   head: {
     title: 'AndShop',
     htmlAttrs: {
@@ -42,7 +45,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '@/plugins/api'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -64,7 +68,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: process.env.API_HOST
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -83,5 +87,9 @@ export default {
         implementation: require('sass')
       }
     }
+  },
+  env: {
+    BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
+    API_HOST: process.env.API_HOST || 'http://localhost:3000'
   }
 }

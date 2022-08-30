@@ -150,7 +150,7 @@ export default {
         this.highlightEmailWithError = false
       }
 
-      if (this.password && isValidPassword(this.password)) {
+      if (isValidPassword(this.password)) {
         this.highlightPasswordWithError = false
       } else {
         this.highlightPasswordWithError = true
@@ -182,7 +182,7 @@ export default {
     },
     checkPasswordOnKeyUp (passwordValue) {
       console.log(passwordValue)
-      if (isValidPassword(this.passwordValue)) {
+      if (passwordValue && isValidPassword(passwordValue)) {
         this.highlightPasswordWithError = false
 
         if (this.repeatPassword === this.password) {

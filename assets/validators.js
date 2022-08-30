@@ -12,6 +12,6 @@ export function isValidName (name) {
 
 export function isValidPassword (pass) {
   // eslint-disable-next-line no-useless-escape
-  const re = /^[a-z][a-z\s]*$/
+  const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
   return re.test(pass)
 }
