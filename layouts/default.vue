@@ -95,8 +95,17 @@ export default {
     @apply z-10;
     @apply fixed;
     @apply top-0;
+    transition: all .3s ease 0s;
   }
-
+  .modal-background_login {
+    @apply bg-grey_dark/80;
+    // @apply w-full;
+    // @apply h-full;
+    @apply z-10;
+    @apply fixed;
+    // @apply top-0;
+    // transition: all .3s ease 0s;
+  }
   .modal-wrapper {
     @apply bg-white;
     @apply z-20;
@@ -121,9 +130,12 @@ export default {
       @apply animate-[slideInLeft_0.4s_ease-out]
   }
   .modal-animation-close{
-    @apply animate-[slideInRight_0.4s_ease-out]
+    @apply animate-[slideInRight_0.4s_ease]
   }
   .modal-animation-login{
   @apply  animate-[slideTop_0.4s_ease-out]
+  }
+  .modal-animation-cllogin{
+  @apply  animate-[slideBottom_1s_ease-out]
   }
 </style>

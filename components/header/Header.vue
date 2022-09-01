@@ -1,12 +1,12 @@
 <template>
   <nav
     ref="menu"
-    class="flex justify-between sticky top-0 bg-base z-10 shadow-md lg:px-10 px-4"
+    class="flex justify-between sticky  top-0 bg-base z-10 shadow-md lg:px-10 px-4 max-w-[100%]"
     role="navigation"
     aria-label="main navigation"
   >
     <nuxt-link :to="{ name: 'index' }" class="navbar-item">
-      <h1 class=" title w-60 h-20" />
+      <h1 class=" title lg:w-60 h-20 w-36 " />
     </nuxt-link>
     <Menu />
     <div class="flex items-center">
@@ -14,48 +14,32 @@
         <!-- <nuxt-link :to="{ name: 'user-wishlist' }" tag="span" class="icon">
         </nuxt-link> -->
         <span class="item_count absolute border-2">{{ numberProductAddedToFav }}</span>
-        <i class="fa-regular hover_item fa-heart text-lg  text-black" />
+        <i class="fa-regular hover_item fa-heart lg:text-xl text-lg text-black" />
       </div>
       <div class="mr-7">
         <div class="cursor-pointer" @click="showCheckoutModal">
           <span class="icon">
             <!-- :class="[numProductsAdded > 0 ? 'p-2 bg-blue text-white rounded-md' : '']" -->
             <span class="item_count absolute border-2">{{ numProductsAdded }}</span>
-            <i class="fa fa-shopping-cart text-lg text-black hover_item " />
+            <i class="fa fa-shopping-cart lg:text-xl text-lg text-black hover_item " />
           </span>
         </div>
       </div>
       <div class="mr-7" @click="showSearchModal">
-        <i class="fa-solid hover_item fa-magnifying-glass text-lg cursor-pointer text-black" />
+        <i class="fa-solid hover_item fa-magnifying-glass lg:text-xl text-lg cursor-pointer text-black" />
       </div>
-      <div class="mr-2">
+      <div class="lg:mr-6 mr-7 sm:block hidden">
         <span class="icon">
           <!-- <i class="fa fa-user text-lg" /> -->
-          <i v-if="!isUserLoggedIn" class="fa-solid fa-right-to-bracket text-lg text-black hover_item cursor-pointer" @click="showLoginModal" />
+          <i v-if="!isUserLoggedIn" class="fa-solid fa-right-to-bracket lg:text-xl text-lg text-black hover_item cursor-pointer" @click="showLoginModal" />
           <!-- <a-icon type="login" /> -->
         </span>
-        <span>
-          <i v-if="isUserLoggedIn" class="cursor-pointer fa-solid fa-circle-user text-lg text-black" @click="onShowDropdown" />
-          <i v-if="isUserLoggedIn" class="fa-solid fa-caret-down absolute mt-2 ml-1 cursor-pointer text-black" />
+        <span class="flex justify-center items-center mr-1">
+          <drop-profile v-if="isUserLoggedIn" class="absolute" />
         </span>
-        <div v-if="showDropdown && isUserLoggedIn" class="dropdown w-52 h-28">
-          <button class="button">
-            {{ getUserName }}
-          </button>
-          <button class="button" @click="logout">
-            <span class="text-lg">{{ logoutLabel }}</span>
-          </button>
-        </div>
-        <div v-if="showDropdown && !isUserLoggedIn" class="dropdown">
-          <button v-if="!isUserLoggedIn" class="button" @click="showLoginModal">
-            <span class="text-lg">Already registered?<br> {{ loginLabel }}</span>
-            <i class="fa fa-sign-in" />
-          </button>
-          <button v-if="!isUserLoggedIn" class="button" @click="showSignupModal">
-            <span class="text-lg">New User?<br> {{ signupLabel }}</span>
-            <i class="fa fa-user-plus" />
-          </button>
-        </div>
+      </div>
+      <div class="mr-3 block sm:hidden">
+        <i class="fa-solid fa-bars text-lg text-black" />
       </div>
     </div>
   </nav>
@@ -63,10 +47,13 @@
 
 <script>
 import Menu from '../menu/Menu.vue'
+import DropProfile from '../subheader/DropProfile.vue'
 export default {
   name: 'VmHeader',
   components: {
-    Menu
+    Menu,
+    DropProfile
+
   },
   data () {
     return {
@@ -99,7 +86,21 @@ export default {
       }
     }
   },
-
+  async created () {
+    if (localStorage.getItem('token')) {
+      try {
+        const token = localStorage.getItem('token')
+        // const authen = `Bearer ${token}`
+        // console.log(authen)
+        const userData = await this.$api.auth.secret(token)
+        console.log('username', userData)
+        this.$store.commit('setUserName', userData.data.username)
+        this.$store.commit('isUserLoggedIn', true)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  },
   mounted () {
     // eslint-disable-next-line no-sequences, no-unused-expressions
     window.addEventListener('blur', this.closeDropdown, true),
@@ -113,16 +114,15 @@ export default {
     handleScroll () {
       if (window.scrollY > 100) {
         this.$refs.menu.classList.add('fixeds')
-        console.log('ok')
       } else {
         this.$refs.menu.classList.remove('fixeds')
       }
     },
-    closeDropdown () {
-      setTimeout(() => {
-        this.showDropdown = false
-      }, 100)
-    },
+    // closeDropdown () {
+    //   setTimeout(() => {
+    //     this.showDropdown = false
+    //   }, 100)
+    // },
     showCheckoutModal () {
       if (this.isUserLoggedIn) {
         this.$store.commit('showCheckoutModal', true)
@@ -147,9 +147,9 @@ export default {
       console.log('show search')
       this.$store.commit('showSearchModal', true)
     },
-    onShowDropdown () {
-      this.showDropdown = !this.showDropdown
-    },
+    // onShowDropdown () {
+    //   this.showDropdown = !this.showDropdown
+    // },
     logout () {
       this.$store.commit('isUserLoggedIn', false)
       this.$store.commit('isUserSignedUp', false)
@@ -189,7 +189,8 @@ export default {
 .title {
     background: url('../../static/logo/logoAndShop.png') no-repeat;
     background-position: 50% 50%;
-    background-size: 220px;
+    // background-size: 220px;
+    @apply lg:bg-logopc bg-logomobile;
   }
 
 .dropdown {

@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-8 px-4 mt-28 mb-16">
+  <div class="grid lg:grid-cols-3 grid-cols-1 g gap-8 px-4 mt-28 mb-16">
     <div class="grid grid-flow-row gap-6">
       <div class="relative overflow-hidden img-zoom-hover">
         <img src="@/static/hero/hero1.png" alt="hero photo">
@@ -49,7 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-flow-row gap-6">
+    <div class=" grid-flow-row gap-6 lg:grid hidden ">
       <div class="relative overflow-hidden img-zoom-hover">
         <img src="@/static/hero/hero4.png" alt="hero photo">
         <div class="product_var_one_text">

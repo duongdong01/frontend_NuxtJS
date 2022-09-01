@@ -1,6 +1,6 @@
 <template>
   <a-menu
-    class="lg:font-bold lg:w-9/12 lg:text-[0.9rem] lg:bg-base lg:px-24 lg:space-x-16 hidden lg:block lg:text-black"
+    class="sm:font-bold lg:w-9/12  lg:text-[0.9rem] lg:bg-base lg:px-24 lg:space-x-16 hidden sm:block lg:text-black  sm:px-12 sm:bg-base"
     mode="horizontal"
     :default-selected-keys="['1']"
     :style="{ lineHeight: '80px' }"

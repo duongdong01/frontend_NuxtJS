@@ -122,8 +122,23 @@ export default {
     closeModal () {
       this.$store.commit('showSignupModal', false)
     },
-    checkForm (e) {
+    async checkForm (e) {
       e.preventDefault()
+
+      try {
+        if (this.name && isValidEmail(this.email) && isValidPassword(this.password) && this.repeatPassword) {
+          await this.$api.auth.signup(this.name, this.email, this.password)
+          alert('thành công')
+          this.highlightEmailWithError = false
+          this.highlightPasswordWithError = false
+          this.isFormSuccess = true
+          this.$store.commit('setUserName', this.name)
+          this.$store.commit('isUserSignedUp', this.isFormSuccess)
+          this.$store.commit('isUserLoggedIn', this.isFormSuccess)
+        }
+      } catch (error) {
+        console.log(error)
+      }
 
       if (this.name && this.email && isValidPassword(this.password) && this.repeatPassword) {
         this.highlightEmailWithError = false

@@ -111,6 +111,10 @@ module.exports = {
           transform: 'perspective(400px)'
         }
       }
+    },
+    backgroundSize: {
+      logopc: '220px',
+      logomobile: '140px'
     }
   },
   plugins: []

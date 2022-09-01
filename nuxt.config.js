@@ -47,6 +47,7 @@ export default {
   plugins: [
     '@/plugins/antd-ui',
     '@/plugins/api'
+
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -91,5 +92,7 @@ export default {
   env: {
     BASE_URL: process.env.BASE_URL || 'http://localhost:3000',
     API_HOST: process.env.API_HOST || 'http://localhost:3000'
+    // BASE_URL: 'http://localhost:3000',
+    // API_HOST: 'http://localhost:3000'
   }
 }

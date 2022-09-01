@@ -136,7 +136,8 @@ export default {
     border-radius: 0;
 }
 .btn_md {
-    padding: 16px 35px;
+  @apply lg:px-9 lg:py-4 px-6 py-3;
+    // padding: 16px 35px;
 }
 .banner_text_one a {
     margin-top: 30px;

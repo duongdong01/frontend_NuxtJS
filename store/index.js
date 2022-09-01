@@ -110,10 +110,14 @@ export const state = () => ({
     openCheckoutModal: false,
     openWishlistModal: false,
     openSearchModal: false
-  }
+  },
+  token: localStorage.getItem('user')
 })
 
 export const getters = {
+  gettoken: (state) => {
+    return state.token
+  },
   productsAdded: (state) => {
     return state.products.filter((el) => {
       return el.isAddedToCart
