@@ -100,6 +100,7 @@ export const state = () => ({
   userInfo: {
     isLoggedIn: false,
     isSignedUp: false,
+    isAdmin: false,
     hasSearched: false,
     name: '',
     productTitleSearched: ''
@@ -110,13 +111,12 @@ export const state = () => ({
     openCheckoutModal: false,
     openWishlistModal: false,
     openSearchModal: false
-  },
-  token: localStorage.getItem('user')
+  }
 })
 
 export const getters = {
-  gettoken: (state) => {
-    return state.token
+  isAdmin: (state) => {
+    return state.userInfo.isAdmin
   },
   productsAdded: (state) => {
     return state.products.filter((el) => {
@@ -191,6 +191,9 @@ export const mutations = {
   },
   isUserLoggedIn: (state, isUserLoggedIn) => {
     state.userInfo.isLoggedIn = isUserLoggedIn
+  },
+  isAdmin: (state, isAdmin) => {
+    state.userInfo.isAdmin = isAdmin
   },
   isUserSignedUp: (state, isSignedUp) => {
     state.userInfo.isSignedUp = isSignedUp

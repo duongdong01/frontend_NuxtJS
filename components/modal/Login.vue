@@ -208,11 +208,14 @@ export default {
         if (isValidEmail(this.email) && isValidPassword(this.password)) {
           const resData = await this.$api.auth.signin(this.email, this.password)
           localStorage.setItem('token', resData.data.token)
+          localStorage.setItem('info', JSON.stringify(resData.data.info))
+          if (resData.data.info.admin) {
+            this.$store.commit('isAdmin', resData.data.info.admin)
+          }
           this.isFormSuccess = true
           this.$store.commit('showLoginModal', false)
           this.$store.commit('isUserLoggedIn', this.isFormSuccess)
-          console.log(resData.data)
-          this.$store.commit('setUserName', resData.data.user)
+          this.$store.commit('setUserName', resData.data.info.username)
           this.openNotificationWithIcon('success')
 
           // this.$store.commit('showLoginModal', false)

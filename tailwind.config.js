@@ -26,7 +26,9 @@ module.exports = {
       base: '#fef5ef',
       yellow: '#e9b102',
       yellow_hover: '#ecb719',
-      orange: '#f79837'
+      orange: '#f79837',
+      transparent: 'transparent',
+      body: '#25074d'
     },
     backgroundPosition: {
       inhertstatic: 'top left',

@@ -93,6 +93,11 @@ export default {
         // const authen = `Bearer ${token}`
         // console.log(authen)
         const userData = await this.$api.auth.secret(token)
+        const resData = JSON.parse(localStorage.getItem('info'))
+        if (resData.admin) {
+          this.$store.commit('isAdmin', resData.admin)
+        }
+
         console.log('username', userData)
         this.$store.commit('setUserName', userData.data.username)
         this.$store.commit('isUserLoggedIn', true)

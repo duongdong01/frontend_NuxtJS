@@ -15,12 +15,17 @@
           <i class="cursor-pointer fa-solid fa-cart-shopping text-[1rem] text-black mx-1" />
           View order </a>
       </a-menu-item>
-      <a-menu-item key="2">
+      <a-menu-item v-if="isAdmin" key="2">
+        <a href="/admin" class=" font-medium pr-1">
+          <i class="fas fa-cog text-[1rem] text-black mx-1 cursor-pointer" />
+          System </a>
+      </a-menu-item>
+      <a-menu-item key="3">
         <a href="#" class=" font-medium pr-1">
           <i class="cursor-pointer fa-solid fa-chart-line text-[1rem] text-black mx-1" />
           See details </a>
       </a-menu-item>
-      <a-menu-item key="3">
+      <a-menu-item key="4">
         <a href="" class=" font-medium pr-1" @click="logout">
           <!-- <i class="fa-solid fa-right-from-bracket"></i> -->
           <i class="cursor-pointer fa-solid fa-right-from-bracket text-[1rem] text-black mx-1" />
@@ -35,11 +40,15 @@ export default {
   computed: {
     userName () {
       return this.$store.getters.getUserName
+    },
+    isAdmin () {
+      return this.$store.getters.isAdmin
     }
   },
   methods: {
     logout () {
       localStorage.removeItem('token')
+      localStorage.removeItem('info')
       this.$store.commit('isUserLoggedIn', false)
       this.$store.commit('isUserSignedUp', false)
       this.$store.commit('removeProductsFromFavourite')
