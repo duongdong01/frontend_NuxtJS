@@ -15,3 +15,9 @@ export function isValidPassword (pass) {
   const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/
   return re.test(pass)
 }
+
+export function isValidCost (price) {
+  // eslint-disable-next-line no-useless-escape
+  const re = /^\d+(\.\d{2})?$/
+  return re.test(price)
+}

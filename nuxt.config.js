@@ -63,7 +63,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/cloudinary'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -71,7 +72,12 @@ export default {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: process.env.API_HOST
   },
-
+  cloudinary: {
+    cloudName: process.env.CLOUDNAME,
+    apiKey: process.env.API_KEY,
+    apiSecret: process.env.API_SECRET,
+    useComponent: true
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     postcss: {
