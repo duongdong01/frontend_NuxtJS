@@ -2,7 +2,7 @@ export const state = () => ({
   products: [
     {
       id: 1,
-      title: 'Product 1',
+      title: 'DAZY Two Tone Drop Shoulder Teddy Jacket',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       price: 50,
       ratings: 3,
@@ -14,7 +14,7 @@ export const state = () => ({
     },
     {
       id: 2,
-      title: 'Product 2',
+      title: 'Letter Graphic Colorblock Raglan Sleeve Tee',
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
       price: 35,
       ratings: 5,

@@ -34,7 +34,7 @@
         <div v-for="(item,index) in form.size" :key="index" class="grid grid-cols-2 gap-7">
           <a-form-model-item
             label="Size"
-            :prop="'size.' +index+'.sz'"
+            :prop="'size.' +index+'.name'"
             :rules="{
               required: true,
               message: 'Please input Activity Size',
@@ -42,13 +42,13 @@
             }"
           >
             <a-input
-              v-model="item.sz"
+              v-model="item.name"
             />
           </a-form-model-item>
 
           <a-form-model-item
             label="Number"
-            :prop="'size.' +index+'.number'"
+            :prop="'size.' +index+'.numberInStock'"
             :rules="{
               required: true,
               message: 'Please input Activity Number',
@@ -56,7 +56,7 @@
             }"
           >
             <a-input
-              v-model="item.number"
+              v-model="item.numberInStock"
             />
           </a-form-model-item>
         </div>
@@ -156,7 +156,7 @@ export default {
         name: '',
         category: '',
         description: '',
-        size: [{ sz: '', number: '' }],
+        size: [{ name: '', numberInStock: '' }],
         images: [],
         price: '',
         originalPrice: ''
@@ -204,8 +204,11 @@ export default {
     onSubmit () {
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.cloudinary()
+          this.submitdata(this.form)
           alert('submit!')
+          setTimeout(() => {
+            location.reload()
+          }, 2000)
           console.log(this.form)
         } else {
           console.log('error submit!!')
@@ -213,9 +216,17 @@ export default {
         }
       })
     },
+    async submitdata (form) {
+      try {
+        await this.cloudinary()
+        await this.$api.product.addProduct(form)
+      } catch (error) {
+        console.log(error)
+      }
+    },
     AddSize () {
       this.form.size.push({
-        sz: '',
+        name: '',
         number: null
       })
       // this.Arraysize++
@@ -259,6 +270,10 @@ export default {
           uploadPreset: 'bnmyktwk'
         }).then(res => this.form.images.push(res.url))
       }
+    },
+    resetForm () {
+      this.formDataIm.datas = []
+      this.formDataIm.files = []
     }
   }
 }

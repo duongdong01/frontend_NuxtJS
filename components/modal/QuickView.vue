@@ -8,40 +8,45 @@
       width="840px"
       @ok="handleOk"
     >
-      <div class="grid lg:grid-cols-8 grid-cols-2 gap-2 w-full h-2/3">
-        <div class="col-span-3 h-full">
-          <img src="@/static/img_demo.png" class="h-full pb-7 pt-1 w-full" alt="photo">
+      <div class="flex w-full h-2/3 sm:flex-row flex-col justify-center">
+        <div class="quick_car mt-2">
+          <Carousel :img="product.images" class="cursor-move" />
         </div>
-        <div class="col-span-5 flex flex-col space-y-2 px-2 ml-3">
-          <h2 class="text-2xl font-semibold text-black">
-            Blue Dress For Woman
+        <div class="flex flex-col space-y-2 px-2 ml-3">
+          <h2 class="sm:text-2xl text-xl font-semibold text-black">
+            {{ product.name }}
           </h2>
-          <div class="flex items-center space-x-1">
-            <i class="fa fa-star text-orange" />
-            <i class="fa fa-star text-orange" />
-            <i class="fa fa-star text-orange" />
-            <i class="fa fa-star" />
-            <i class="fa fa-star" />
-            <h2 class="text-back">(3 Customer Review)</h2>
+          <div class="text-black font-medium text-[1rem]">
+            <a-rate v-model="rating" disabled allow-half />  (Rating {{ product.rating }}/5)
           </div>
           <h2 class="text-lg text-black font-semibold">
-            $98
+            ${{ product.price }} <span class="text-orange line-through ml-2">${{ product.price*1.2 }}</span>
           </h2>
-          <p class="text-lg text-black">
-            Vivamus suscipit tortor eget felis porttitor volutpat. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Proin eget tortor risus. Nulla porttitoraccumsan tincidunt.
-            Pellentesque in ipsum id orci porta dapibus.
+          <p class="text-[1rem] font-normal text-black">
+            {{ product.description }}
           </p>
           <h2 class="text-lg text-black font-semibold">
-            Color
+            Size
           </h2>
-          <div class="flex space-x-2">
-            <li class="bg-blue w-6 h-6" />
-            <li class="bg-green w-6 h-6" />
+          <div>
+            <a-radio-group v-model="value" class="space-x-2" @change="onChangeRadio">
+              <a-radio-button value="L">
+                L
+              </a-radio-button>
+              <a-radio-button value="M">
+                M
+              </a-radio-button>
+              <a-radio-button value="S">
+                S
+              </a-radio-button>
+            </a-radio-group>
+            <p v-if="value!=''" class="pt-2 text-black">
+              {{ number }} products available
+            </p>
           </div>
           <div class="flex justify-between">
-            <a-input-number :min="1" :max="100000" :default-value="1" @change="onChange" />
-            <button class="py-3 px-2 w-1/3 bg-black  hover:opacity-90 transition-all text-white font-semibold">
+            <a-input-number v-model="valueNumber" :min="1" :max="number > 0? number : 1" @change="onChange" />
+            <button class="sm:py-3 sm:px-2 py-1 w-1/3 bg-black  hover:opacity-90 transition-all text-white font-semibold">
               ADD TO CART
             </button>
           </div>
@@ -70,13 +75,55 @@
   </div>
 </template>
 <script>
+import Carousel from '@/components/carousel/Carousel.vue'
+
 export default {
+  components: {
+    Carousel
+  },
+  props: ['product'],
   data () {
     return {
-      visible: false
+      rating: this.product.rating,
+      visible: false,
+      value: '',
+      number: 0,
+      valueNumber: 1
     }
   },
   methods: {
+    onChangeRadio (e) {
+      console.log(`checked = ${e.target.value}`)
+      console.log(this.product)
+      // eslint-disable-next-line eqeqeq
+      if (e.target.value == 'L') {
+        const sizes = [...this.product.sizes]
+        sizes.forEach((size) => {
+          if (size.name.toUpperCase() === 'L') {
+            this.number = size.numberInStock
+          }
+        })
+      }
+
+      // eslint-disable-next-line eqeqeq
+      if (e.target.value == 'M') {
+        const sizes = [...this.product.sizes]
+        sizes.forEach((size) => {
+          if (size.name.toUpperCase() === 'M') {
+            this.number = size.numberInStock
+          }
+        })
+      }
+      // eslint-disable-next-line eqeqeq
+      if (e.target.value == 'S') {
+        const sizes = [...this.product.sizes]
+        sizes.forEach((size) => {
+          if (size.name.toUpperCase() === 'S') {
+            this.number = size.numberInStock
+          }
+        })
+      }
+    },
     showModal () {
       this.visible = true
     },
@@ -86,12 +133,13 @@ export default {
     },
     onChange (value) {
       console.log('changed', value)
+      console.log('valueNumber', this.valueNumber)
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 .ant-modal{
     @apply h-auto w-2/3;
 }
@@ -103,5 +151,10 @@ export default {
 }
 .icon_quickview:hover{
     @apply text-orange border-orange cursor-pointer;
+}
+.quick_car{
+  .ant-carousel{
+    @apply lg:w-80 sm:w-64
+  }
 }
 </style>

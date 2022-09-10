@@ -21,3 +21,12 @@ export function isValidCost (price) {
   const re = /^\d+(\.\d{2})?$/
   return re.test(price)
 }
+// map object thanh key=value
+
+export function valiQuery (query) {
+  return Object.entries(query)
+    .map(([key, value]) =>
+          `${key}=${value}`
+    )
+    .join('&')
+}

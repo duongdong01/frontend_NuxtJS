@@ -11,13 +11,13 @@
     <div>
       <a-tabs default-active-key="1" @change="callback">
         <a-tab-pane key="1" tab="NEW ARRIVAL" class="font-semibold">
-          <ProductsList :products="products" />
+          <ProductsList :products="newProducts" />
         </a-tab-pane>
         <a-tab-pane key="2" tab="BEST SELLER" class="font-semibold" force-render>
-          <ProductsList :products="products" />
+          <ProductsList :products="bestProducts" />
         </a-tab-pane>
         <a-tab-pane key="3" tab="ON SALE">
-          Content of Tab Pane 3
+          <ProductsList :products="onSaleProducts" />
         </a-tab-pane>
       </a-tabs>
     </div>
@@ -25,44 +25,40 @@
 </template>
 <script>
 import ProductsList from '../products_list/ProductsListContainer.vue'
-import { getByTitle } from '@/assets/filters'
+// import { getByTitle } from '@/assets/filters'
 export default {
   components: {
     ProductsList
   },
   data () {
-    return {}
-  },
-  computed: {
-    products () {
-      const {
-        products,
-        userInfo: {
-          hasSearched
-        }
-      } = this.$store.state
-
-      if (hasSearched) {
-        return this.getProductByTitle()
-      } else {
-        return products
-      }
+    return {
+      newProducts: [],
+      bestProducts: [],
+      onSaleProducts: []
     }
+  },
+  mounted () {
+    this.getNewProducts()
+    this.getBestProducts()
+    this.getOnSaleProducts()
   },
   methods: {
     callback (key) {
       console.log(key)
     },
-    getProductByTitle () {
-      const {
-        products,
-        userInfo: {
-          productTitleSearched
-        }
-      } = this.$store.state
-
-      return getByTitle(products, productTitleSearched)
+    async getNewProducts () {
+      const product = await this.$api.product.searchProduct({ search: '', page: 1, limit: 8, sort: '-createdAt' })
+      this.newProducts.push(...product.products.products)
+    },
+    async getBestProducts () {
+      const product = await this.$api.product.searchProduct({ search: '', page: 1, limit: 8, sort: '-sold' })
+      this.bestProducts.push(...product.products.products)
+    },
+    async getOnSaleProducts () {
+      const product = await this.$api.product.searchProduct({ search: '', page: 1, limit: 8, sort: '_id' })
+      this.onSaleProducts.push(...product.products.products)
     }
+
   }
 }
 </script>

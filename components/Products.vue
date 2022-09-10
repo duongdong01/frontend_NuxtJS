@@ -5,25 +5,24 @@
         :to="{
           name: 'product_detail-id',
           params: {
-            id: product.id,
-            title: product.title,
+            id: product._id,
+            name: product.name,
+            description:product.description,
+            rating: product.rating,
+            category:product.category,
+            images:product.images,
             price: product.price,
-            rating: product.ratings,
+            originalPrice:product.originalPrice,
+            sold:product.sold,
+            view:product.view,
             reviews: product.reviews,
-            isAddedBtn: product.isAddedBtn
           }
         }"
       >
         <div class="overflow-hidden relative">
-          <img class="rounded-t-2xl img_show1" src="@/static/img_demo.png" alt="Placeholder image">
-          <img class="rounded-t-2xl img_show2 absolute top-0 opacity-0" src="@/static/img_demo2.png" alt="Placeholder image">
+          <img class="rounded-t-2xl img_show1" :src="product.images[0]" alt="Placeholder image">
+          <img class="rounded-t-2xl img_show2 absolute top-0 opacity-0" :src="product.images[1]" alt="Placeholder image">
         </div>
-
-        <!-- <div v-show="product.isFavourite" class="button text-lg absolute top-0 w-8 h-8 bg-white" :title="removeFromFavouriteLabel" @click="removeFromFavourite(product.id)">
-          <span class="icon">
-            <i class="fas fa-heart" />
-          </span>
-        </div> -->
       </nuxt-link>
       <div class="m-4 icon_product top-0" :title="addToFavouriteLabel" @click="saveToFavorite(product.id)">
         <span class="icon">
@@ -33,7 +32,7 @@
       <div class=" icon_product  mx-4 top-16 my-1 item_hover" :title="quickView" @click="showQuickView">
         <i class="fa-solid fa-expand" />
       </div>
-      <div class=" icon_product  mx-4 top-28 my-2 item_hover" title="100 views">
+      <div class=" icon_product  mx-4 top-28 my-2 item_hover" :title="`${product.view} views` ">
         <i class="far fa-eye" />
       </div>
       <div class="absolute w-full bottom-20 flex justify-center item_hover">
@@ -47,18 +46,23 @@
           :to="{
             name: 'product_detail-id',
             params: {
-              id: product.id,
-              title: product.title,
+              id: product._id,
+              name: product.name,
+              description:product.description,
+              rating: product.rating,
+              category:product.category,
+              images:product.images,
               price: product.price,
-              rating: product.ratings,
+              originalPrice:product.originalPrice,
+              sold:product.sold,
+              view:product.view,
               reviews: product.reviews,
-              isAddedBtn: product.isAddedBtn
             }
           }"
         >
-          <div class="text-black flex justify-center font-semibold hover:text-[#ff7004] transition-all ease-in delay-150">
+          <div class="text-black flex justify-center font-semibold hover:text-[#ff7004] transition-all ease-in delay-150 ">
             <p>
-              {{ product.title }} bla bla
+              {{ product.name }}
             </p>
           </div>
           <div class="flex justify-center font-semibold text-black items-center">
@@ -70,83 +74,7 @@
       </div>
     </div>
     <div class="text-wrapper  cursor-pointer" />
-    <!-- <div class="text-wrapper p-4">
-      <div class="flex items-center justify-between mb-3 relative">
-        <div class="media-content">
-          <nuxt-link
-            :to="{
-              name: 'product_detail-id',
-              params: {
-                id: product.id,
-                title: product.title,
-                price: product.price,
-                rating: product.ratings,
-                reviews: product.reviews,
-                isAddedBtn: product.isAddedBtn
-              }
-            }"
-          >
-            <span :class="[detail ? 'text-3xl' : 'text-lg']">{{ product.title }}</span>
-          </nuxt-link>
-        </div>
-        <div class="absolute">
-          <button v-show="product.isFavourite" class="button text-lg" :title="removeFromFavouriteLabel" @click="removeFromFavourite(product.id)">
-            <span class="icon">
-              <i class="fas fa-heart" />
-            </span>
-          </button>
-          <button v-show="!product.isFavourite" class="button text-lg" :title="addToFavouriteLabel" @click="saveToFavorite(product.id)">
-            <span class="icon">
-              <i class="far fa-heart" />
-            </span>
-          </button>
-        </div>
-      </div>
-      <div class="content is-clearfix">
-        <p :class="[detail ? 'text-2xl' : 'text-base text-black']">
-          {{ product.description }}
-        </p>
-        <div class="flex justify-between">
-          <div class="flex items-center">
-            <i v-if="product.ratings === 1" class="fa fa-star" />
-            <i v-if="product.ratings === 2" class="fa fa-star" />
-            <i v-if="product.ratings === 2" class="fa fa-star" />
-            <i v-if="product.ratings === 3" class="fa fa-star" />
-            <i v-if="product.ratings === 3" class="fa fa-star" />
-            <i v-if="product.ratings === 3" class="fa fa-star" />
-            <i v-if="product.ratings === 4" class="fa fa-star" />
-            <i v-if="product.ratings === 4" class="fa fa-star" />
-            <i v-if="product.ratings === 4" class="fa fa-star" />
-            <i v-if="product.ratings === 4" class="fa fa-star" />
-            <i v-if="product.ratings === 5" class="fa fa-star" />
-            <i v-if="product.ratings === 5" class="fa fa-star" />
-            <i v-if="product.ratings === 5" class="fa fa-star" />
-            <i v-if="product.ratings === 5" class="fa fa-star" />
-            <i v-if="product.ratings === 5" class="fa fa-star" />
-            <p class="ml-2 text-lg">
-              {{ product.reviews > 0 ? `${product.reviews} Reviews` : 'No reviews' }}
-            </p>
-          </div>
-          <p class="text-3xl font-medium">
-            <strong>${{ product.price }}</strong>
-          </p>
-        </div>
-        <div class="flex justify-between mt-5 items-center">
-          <a-input-number
-            v-if="detail"
-            v-model="selected"
-            :min="1"
-            :max="100"
-            :step="1"
-            @change="onSelectQuantity(product.id)"
-          />
-          <button class="rounded-xl p-3 bg-blue text-white" @click="addToCart(product.id)">
-            {{ addToCartLabel }}
-          </button>
-        </div>
-      </div>
-    </div> -->
-    <quick-view ref="quickModal" />
+    <quick-view ref="quickModal" :product="product" />
   </div>
 </template>
 

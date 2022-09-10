@@ -12,7 +12,7 @@
       <a v-for="img in imgs" :key="img" href="#" class="relative instagram_img overflow-hidden">
         <img :src="img" alt="photo">
         <div class="absolute w-full h-full z-[2] justify-center items-center top-0 bg-white/50 hidden icon_instagram ">
-          <i class="fa-brands fa-instagram text-black text-4xl" />
+          <i class="fa-brands fa-instagram text-black lg:text-4xl text-2xl" />
         </div>
       </a>
     </div>

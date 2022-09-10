@@ -10,13 +10,16 @@
         {{ noProductLabel }}
       </h2>
     </div>
+    <div class="flex justify-center items-center pt-6 pb-4">
+      <h2 class="text-black lg:text-2xl cursor-pointer text-xl hover:text-orange transition-all">
+        VIEW ALL PRODUCTS
+      </h2>
+    </div>
   </div>
 </template>
 
 <script>
 import Products from '../Products'
-// import { getByTitle } from '@/assets/filters'
-
 export default {
   name: 'ProductsList',
 
