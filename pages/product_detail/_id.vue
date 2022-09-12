@@ -64,7 +64,7 @@
             Add To Wishlist
           </p>
         </div>
-        <button class="bg-black text-white font-medium w-32 py-2 px-1 transition-all hover:opacity-80" @click="addToCart">
+        <button class="bg-black text-white font-medium w-36 py-[10px] px-2 transition-all hover:opacity-80" @click="addToCart">
           ADD TO CART
         </button>
       </div>

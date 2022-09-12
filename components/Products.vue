@@ -24,7 +24,7 @@
           <img class="rounded-t-2xl img_show2 absolute top-0 opacity-0" :src="product.images[1]" alt="Placeholder image">
         </div>
       </nuxt-link>
-      <div class="m-4 icon_product top-0" :title="addToFavouriteLabel" @click="saveToFavorite(product.id)">
+      <div class="m-4 icon_product top-0" :title="addToFavouriteLabel" @click="saveToFavorite(product._id)">
         <span class="icon">
           <i class="far fa-heart" />
         </span>
@@ -36,7 +36,7 @@
         <i class="far fa-eye" />
       </div>
       <div class="absolute w-full bottom-20 flex justify-center item_hover">
-        <button class="rounded-md py-3 px-2 w-2/3 bg-white  hover:text-[#ff7004] transition-all text-black font-bold" @click="addToCart(product.id)">
+        <button class="rounded-md py-3 px-2 w-2/3 bg-white  hover:text-[#ff7004] transition-all text-black font-bold" @click="addToCart(product._id)">
           {{ addToCartLabel }}
         </button>
       </div>
@@ -94,7 +94,8 @@ export default {
       addToFavouriteLabel: 'Add to favourite',
       removeFromFavouriteLabel: 'Remove from favourite',
       selected: 1,
-      quickView: 'Quick view'
+      quickView: 'Quick view',
+      listCarts: []
       // quantityArray: []
     }
   },
@@ -106,27 +107,43 @@ export default {
   },
 
   mounted () {
-    // for (let i = 1; i <= 20; i++) {
-    //   this.quantityArray.push(i)
-    // }
-
     if (this.$props.product.quantity > 1) {
       this.selected = this.$props.product.quantity
     }
+    // this.getListCart()
   },
 
   methods: {
+    openNotificationWithIcon (type) {
+      this.$notification[type]({
+        // message: 'Notification Title',
+        description:
+          'Add cart successfully',
+        duration: 1.5
+        // top: '30'
+      })
+    },
     showQuickView () {
       this.$refs.quickModal.showModal()
     },
-    addToCart (id) {
+    async addToCart (productId) {
       if (this.isUserLogged) {
-        const data = {
-          id,
-          status: true
+        try {
+          const token = localStorage.getItem('token')
+          const userData = await this.$api.auth.secret(token)
+          // const dataCart = await this.$api.cart.getCarts(userData.data._id)
+          const cart = {
+            user: userData.data._id,
+            product: productId,
+            size: 'L',
+            quantity: 1
+          }
+          await this.$api.cart.addToCart(cart)
+          this.$store.dispatch('dataCart')
+          this.openNotificationWithIcon('success')
+        } catch (error) {
+          console.log(error)
         }
-        this.$store.commit('addToCart', id)
-        this.$store.commit('setAddedBtn', data)
       } else {
         this.$store.commit('showLoginModal', true)
       }

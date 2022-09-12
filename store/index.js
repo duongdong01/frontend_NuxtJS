@@ -97,6 +97,7 @@ export const state = () => ({
       quantity: 1
     }
   ],
+  carts: [],
   userInfo: {
     isLoggedIn: false,
     isSignedUp: false,
@@ -115,6 +116,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  carts: (state) => {
+    return state.carts
+  },
   isAdmin: (state) => {
     return state.userInfo.isAdmin
   },
@@ -168,6 +172,12 @@ export const mutations = {
         el.isAddedToCart = true
       }
     })
+  },
+  setCart: (state, data) => {
+    state.carts.push(...data)
+  },
+  resetCart: (state) => {
+    state.carts = []
   },
   setAddedBtn: (state, data) => {
     state.products.forEach((el) => {
@@ -247,20 +257,28 @@ export const mutations = {
     state.authUser = authUser
   }
 }
-/*
+
 export const actions = {
-  async nuxtServerInit({ commit }) {
-    const res = await this.$axios.get("/api/current_user")
-    commit("SET_USER", res.data)
-  },
+  // async nuxtServerInit({ commit }) {
+  //   const res = await this.$axios.get("/api/current_user")
+  //   commit("SET_USER", res.data)
+  // },
 
-  async logout({ commit }) {
-    const { data } = await this.$axios.get("/api/logout")
-    if (data.ok) commit("SET_USER", null)
-  },
+  // async logout({ commit }) {
+  //   const { data } = await this.$axios.get("/api/logout")
+  //   if (data.ok) commit("SET_USER", null)
+  // },
 
-  async handleToken({ commit }, token) {
-    const res = await this.$axios.post("/api/stripe", token)
-    commit("SET_USER", res.data)
+  // async handleToken({ commit }, token) {
+  //   const res = await this.$axios.post("/api/stripe", token)
+  //   commit("SET_USER", res.data)
+  // }
+  async dataCart ({ commit }) {
+    commit('resetCart')
+    const token = localStorage.getItem('token')
+    const userData = await this.$api.auth.secret(token)
+    const dataCart = await this.$api.cart.getCarts(userData.data._id)
+    commit('setCart', dataCart.data.carts)
+    console.log(dataCart.data.carts)
   }
-} */
+}

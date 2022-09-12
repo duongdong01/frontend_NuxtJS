@@ -46,7 +46,7 @@
           </div>
           <div class="flex justify-between">
             <a-input-number v-model="valueNumber" :min="1" :max="number > 0? number : 1" @change="onChange" />
-            <button class="sm:py-3 sm:px-2 py-1 w-1/3 bg-black  hover:opacity-90 transition-all text-white font-semibold">
+            <button class="sm:py-[10px] sm:px-2 py-1 w-1/3 bg-black  hover:opacity-90 transition-all text-white font-semibold">
               ADD TO CART
             </button>
           </div>

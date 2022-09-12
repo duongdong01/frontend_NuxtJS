@@ -129,7 +129,6 @@
 <script>
 import Signup from './Signup.vue'
 import { isValidEmail, isValidPassword } from '@/assets/validators'
-
 export default {
   name: 'Login',
   components: {
@@ -156,7 +155,6 @@ export default {
       btnRegisteredLabel: 'Close'
     }
   },
-
   computed: {
     isUserLoggedIn () {
       return this.$store.getters.isUserLoggedIn
@@ -216,11 +214,8 @@ export default {
           this.$store.commit('showLoginModal', false)
           this.$store.commit('isUserLoggedIn', this.isFormSuccess)
           this.$store.commit('setUserName', resData.data.info.username)
+          this.$store.dispatch('dataCart')
           this.openNotificationWithIcon('success')
-
-          // this.$store.commit('showLoginModal', false)
-          // this.$store.commit('isUserLoggedIn', this.isFormSuccess)
-          // this.openNotificationWithIcon('success')
         }
       } catch (error) {
         this.highlightEmailWithError = true

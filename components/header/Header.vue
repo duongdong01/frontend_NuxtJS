@@ -20,7 +20,7 @@
         <div class="cursor-pointer" @click="showCheckoutModal">
           <span class="icon">
             <!-- :class="[numProductsAdded > 0 ? 'p-2 bg-blue text-white rounded-md' : '']" -->
-            <span class="item_count absolute border-2">{{ numProductsAdded }}</span>
+            <span class="item_count absolute border-2">{{ carts.length }}</span>
             <i class="fa fa-shopping-cart lg:text-xl text-lg text-black hover_item " />
           </span>
         </div>
@@ -67,6 +67,9 @@ export default {
   },
 
   computed: {
+    carts () {
+      return this.$store.getters.carts
+    },
     numProductsAdded () {
       return this.$store.getters.productsAdded.length
     },
@@ -101,6 +104,7 @@ export default {
         console.log('username', userData)
         this.$store.commit('setUserName', userData.data.username)
         this.$store.commit('isUserLoggedIn', true)
+        this.$store.dispatch('dataCart')
       } catch (error) {
         console.log(error)
       }
