@@ -1,10 +1,16 @@
 <template>
   <div class="py-8 max-w-full text-gray-700">
-    <h2 class="text-3xl font-medium mb-10 pl-3 md:pl-6">Documentation</h2>
+    <h2 class="text-3xl font-medium mb-10 pl-3 md:pl-6">
+      Documentation
+    </h2>
     <section class="mb-16 px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">Features</h2>
+      <h2 class="text-2xl font-medium">
+        Features
+      </h2>
       <ul class="list-disc pl-6 mt-4">
-        <li class="mb-4">Support of the active route (styled by default).</li>
+        <li class="mb-4">
+          Support of the active route (styled by default).
+        </li>
         <li class="mb-4">
           Fully customizable and without external dependencies.
         </li>
@@ -19,7 +25,9 @@
     </section>
 
     <section class="mb-16 px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">File Structure</h2>
+      <h2 class="text-2xl font-medium">
+        File Structure
+      </h2>
       <div class="pl-2">
         <div class="flex mt-4 mb-3">
           <folder-icon />
@@ -81,7 +89,9 @@
     </section>
 
     <section class="mb-16 px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">File Structure explained</h2>
+      <h2 class="text-2xl font-medium">
+        File Structure explained
+      </h2>
       <p class="mt-5">
         We will focus on <span class="font-medium">dashboard</span> folder and
         its <span class="font-medium">subfolders</span> which contain all the
@@ -207,7 +217,9 @@
     </section>
 
     <section class="mb-16 px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">How it works ?</h2>
+      <h2 class="text-2xl font-medium">
+        How it works ?
+      </h2>
       <ul class="pl-6 list-disc mt-4">
         <li class="mb-3">
           Add your routes and items in the
@@ -226,7 +238,9 @@
     </section>
 
     <section class="mb-16 px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">Auto Format and Linting</h2>
+      <h2 class="text-2xl font-medium">
+        Auto Format and Linting
+      </h2>
       <div class="mt-4">
         The dashboard is provided with <span class="font-medium">eslint</span>,
         <span class="font-medium">prettier</span>,
@@ -239,7 +253,9 @@
     </section>
 
     <section class="mb-16 px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">Export</h2>
+      <h2 class="text-2xl font-medium">
+        Export
+      </h2>
       <p class="mt-4">
         As there is no vendor lock-in, if you already have a dashboard, you can
         just copy the small configuration from
@@ -252,22 +268,20 @@
         <ul class="pl-6 list-disc mt-4">
           <li class="mb-3">
             Add your routes and items in the
-            <span class="px-1 font-medium"
-              >dashboard/sidenavigation/Items.vue</span
-            >
+            <span class="px-1 font-medium">dashboard/sidenavigation/Items.vue</span>
             file
           </li>
           <li class="mb-3">
-            Replace your layout by the<span class="px-1 font-medium"
-              >dashboard-layout</span
-            >component
+            Replace your layout by the<span class="px-1 font-medium">dashboard-layout</span>component
           </li>
         </ul>
       </div>
     </section>
 
     <section class="px-3 md:px-8 py-8 shadow bg-white">
-      <h2 class="text-2xl font-medium">Customization</h2>
+      <h2 class="text-2xl font-medium">
+        Customization
+      </h2>
       <p class="mt-5">
         You can customize everything according to your preferences if it doesn't
         suit you. What we have done is just provide a solid structure for better
@@ -285,7 +299,9 @@
         <span class="font-medium">mobile-position</span>, which indicates the
         positioning of the sidenav on mobile.
       </p>
-      <p class="pt-5">This prop can have two possible values :</p>
+      <p class="pt-5">
+        This prop can have two possible values :
+      </p>
       <ul class="pl-6 mt-4 list-disc">
         <li class="mb-3">
           <strong>left :</strong> sidenav will be aligned to the left
@@ -302,6 +318,6 @@ import VueIcon from './icons/VueIcon.vue'
 import FolderIcon from './icons/FolderIcon.vue'
 export default {
   name: 'Doc',
-  components: { Snippet, FolderIcon, VueIcon },
+  components: { Snippet, FolderIcon, VueIcon }
 }
 </script>

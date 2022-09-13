@@ -21,10 +21,10 @@ export default {
   props: {
     extendClass: {
       type: String,
-      default: '',
-    },
-  },
-};
+      default: ''
+    }
+  }
+}
 </script>
 
 <style scoped></style>
