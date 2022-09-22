@@ -39,7 +39,7 @@
           <a-form-model-item prop="valueRating">
             <a-rate v-model="formComment.rating" />
           </a-form-model-item>
-          <a-button type="primary" @click="onSubmit">
+          <a-button class="bg-[#25074d] text-white" @click="onSubmit">
             Comment
           </a-button>
         </a-form-model>

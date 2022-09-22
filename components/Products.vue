@@ -114,15 +114,6 @@ export default {
   },
 
   methods: {
-    openNotificationWithIcon (type) {
-      this.$notification[type]({
-        // message: 'Notification Title',
-        description:
-          'Add cart successfully',
-        duration: 1.5
-        // top: '30'
-      })
-    },
     showQuickView () {
       this.$refs.quickModal.showModal()
     },
@@ -139,8 +130,8 @@ export default {
             quantity: 1
           }
           await this.$api.cart.addToCart(cart)
+          this.$toast.success('Add cart successfully', { timeout: 1500 })
           this.$store.dispatch('dataCart')
-          this.openNotificationWithIcon('success')
         } catch (error) {
           console.log(error)
         }

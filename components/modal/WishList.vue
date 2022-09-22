@@ -29,15 +29,15 @@
                 {{ removeLabel }}
               </button> -->
             </div>
-            <div v-if="productsInWishlist.length === 0">
+            <!-- <div v-if="productsInWishlist.length === 0">
               <p>{{ wishEmptyLabel }}</p>
-            </div>
+            </div> -->
           </div>
         </section>
         <div class="m-4">
-          <button v-show="productsInWishlist.length > 0 && !isCheckoutSection" class="rounded-xl p-3 bg-blue text-white w-full">
+          <!-- <button v-show="productsInWishlist.length > 0 && !isCheckoutSection" class="rounded-xl p-3 bg-blue text-white w-full">
             View Wishlish
-          </button>
+          </button> -->
         </div>
       </div>
     </div>

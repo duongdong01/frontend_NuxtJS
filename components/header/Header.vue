@@ -13,7 +13,7 @@
       <div class="mr-7 cursor-pointer" @click="showWishlistModal">
         <!-- <nuxt-link :to="{ name: 'user-wishlist' }" tag="span" class="icon">
         </nuxt-link> -->
-        <span class="item_count absolute border-2">{{ numberProductAddedToFav }}</span>
+        <span class="item_count absolute border-2">{{ 0 }}</span>
         <i class="fa-regular hover_item fa-heart lg:text-xl text-lg text-black" />
       </div>
       <div class="mr-7">
@@ -69,12 +69,6 @@ export default {
   computed: {
     carts () {
       return this.$store.getters.carts
-    },
-    numProductsAdded () {
-      return this.$store.getters.productsAdded.length
-    },
-    numberProductAddedToFav () {
-      return this.$store.getters.productsAddedToFavourite.length
     },
     isUserLoggedIn () {
       return this.$store.getters.isUserLoggedIn

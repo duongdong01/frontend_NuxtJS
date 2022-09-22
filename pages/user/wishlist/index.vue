@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="p-5">
     <h3 class="text-2xl mb-4">
       {{ pageTitle }}
@@ -57,4 +57,4 @@ export default {
     }
   }
 }
-</script>
+</script> -->

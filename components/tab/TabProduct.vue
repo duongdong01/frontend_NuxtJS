@@ -8,7 +8,7 @@
         Mauris luctus nisi sapien tristique dignissim ornare
       </p>
     </div>
-    <div>
+    <div class="tab_product">
       <a-tabs default-active-key="1" @change="callback">
         <a-tab-pane key="1" tab="NEW ARRIVAL" class="font-semibold">
           <ProductsList :products="newProducts" />
@@ -64,32 +64,35 @@ export default {
 </script>
 
 <style lang="scss">
-.ant-tabs-nav-wrap{
-    @apply mt-3;
-}
-.ant-tabs-bar{
-    @apply border-0
-}
-.ant-tabs-nav-scroll{
-    @apply w-full flex justify-center;
+  .tab_product{
 
-}
-.ant-tabs-nav .ant-tabs-tab-active{
-    @apply text-orange;
-}
-.ant-tabs-tab{
-    @apply font-semibold text-black text-[1rem] leading-6;
-}
-.ant-tabs-tab:hover {
-    @apply text-orange
-}
-.ant-tabs-tab-active{
-    @apply text-orange
-}
-.ant-tabs-ink-bar{
-    @apply bg-orange
-}
-.ant-tabs-nav .ant-tabs-tab:hover{
-    @apply text-orange
-}
+    .ant-tabs-nav-wrap{
+        @apply mt-3;
+    }
+    .ant-tabs-bar{
+        @apply border-0
+    }
+    .ant-tabs-nav-scroll{
+        @apply w-full flex justify-center;
+
+    }
+    .ant-tabs-nav .ant-tabs-tab-active{
+        @apply text-orange;
+    }
+    .ant-tabs-tab{
+        @apply font-semibold text-black text-[1rem] leading-6;
+    }
+    .ant-tabs-tab:hover {
+        @apply text-orange
+    }
+    .ant-tabs-tab-active{
+        @apply text-orange
+    }
+    .ant-tabs-ink-bar{
+        @apply bg-orange
+    }
+    .ant-tabs-nav .ant-tabs-tab:hover{
+        @apply text-orange
+    }
+  }
 </style>

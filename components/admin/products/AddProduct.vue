@@ -6,7 +6,7 @@
     :colon="false"
     layout="vertical"
   >
-    <div class="flex flex-col justify-center">
+    <div class="flex flex-col justify-center add_product">
       <a-form-model-item ref="name" label="Product name" prop="name">
         <a-input
           v-model="form.name"
@@ -280,21 +280,23 @@ export default {
 </script>
 
 <style lang="scss">
-.ant-form-item{
-    @apply flex flex-col
-}
-.ant-form-item-control-wrapper{
-  @apply w-full
-}
-.ant-form-item-label{
-  @apply text-grey_dark font-medium
-}
-.ant-form-item-label{
-  @apply w-full
-}
-.ant-btn{
-  @apply bg-[#25074d] lg:w-24 lg:h-9 hover:bg-blue focus:bg-blue hover:text-white focus:text-white
-}
+  .add_product{
+    .ant-form-item{
+        @apply flex flex-col
+    }
+    .ant-form-item-control-wrapper{
+      @apply w-full
+    }
+    .ant-form-item-label{
+      @apply text-grey_dark font-medium
+    }
+    .ant-form-item-label{
+      @apply w-full
+    }
+    .ant-btn{
+      @apply bg-[#25074d] lg:w-24 lg:h-9 hover:bg-blue focus:bg-blue hover:text-white focus:text-white
+    }
+  }
 .btn-create{
 
   .ant-form-item-control{

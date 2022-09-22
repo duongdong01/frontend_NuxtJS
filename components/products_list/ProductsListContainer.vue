@@ -40,35 +40,5 @@ export default {
     }
   }
 
-  // computed: {
-  //   products () {
-  //     const {
-  //       products,
-  //       userInfo: {
-  //         hasSearched
-  //       }
-  //     } = this.$store.state
-
-  //     if (hasSearched) {
-  //       return this.getProductByTitle()
-  //     } else {
-  //       return products
-  //     }
-  //   }
-  // },
-
-  // methods: {
-  //   getProductByTitle () {
-  //     const {
-  //       products,
-  //       userInfo: {
-  //         productTitleSearched
-  //       }
-  //     } = this.$store.state
-
-  //     return getByTitle(products, productTitleSearched)
-  //   }
-  // }
-
 }
 </script>

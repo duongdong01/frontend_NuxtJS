@@ -46,7 +46,7 @@
           </div>
           <div class="flex justify-between">
             <a-input-number v-model="valueNumber" :min="1" :max="number > 0? number : 1" @change="onChange" />
-            <button class="sm:py-[10px] sm:px-2 py-1 w-1/3 bg-black  hover:opacity-90 transition-all text-white font-semibold">
+            <button class="sm:py-[10px] sm:px-2 py-1 w-1/3 bg-black  hover:opacity-90 transition-all text-white font-semibold" @click="addToCart">
               ADD TO CART
             </button>
           </div>
@@ -91,7 +91,37 @@ export default {
       valueNumber: 1
     }
   },
+  computed: {
+    isUserLoggedIn () {
+      return this.$store.getters.isUserLoggedIn
+    }
+  },
   methods: {
+    async addToCart () {
+      if (!this.value) {
+        this.$toast.warning('Please choose size', { timeout: 1500 })
+      } else if (this.isUserLoggedIn) {
+        try {
+          const token = localStorage.getItem('token')
+          const userData = await this.$api.auth.secret(token)
+          const cart = {
+            user: userData.data._id,
+            product: this.product._id,
+            quantity: this.valueNumber,
+            size: this.value
+          }
+          await this.$api.cart.addToCart(cart)
+          this.$store.dispatch('dataCart')
+          console.log(cart)
+          this.$toast.success('Add cart successfully', { timeout: 1500 })
+        } catch (error) {
+          console.log('error')
+        }
+      } else {
+        this.visible = false
+        this.$store.commit('showLoginModal', true)
+      }
+    },
     onChangeRadio (e) {
       console.log(`checked = ${e.target.value}`)
       console.log(this.product)

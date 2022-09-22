@@ -174,15 +174,6 @@ export default {
   },
 
   methods: {
-    openNotificationWithIcon (type) {
-      this.$notification[type]({
-        // message: 'Notification Title',
-        description:
-          'Logged in successfully',
-        duration: 1.5
-        // top: '30'
-      })
-    },
     changeIsLogin (a) {
       this.islogin = a
       // console.log(this.islogin)
@@ -215,7 +206,7 @@ export default {
           this.$store.commit('isUserLoggedIn', this.isFormSuccess)
           this.$store.commit('setUserName', resData.data.info.username)
           this.$store.dispatch('dataCart')
-          this.openNotificationWithIcon('success')
+          this.$toast.success('Logged in successfully', { timeout: 1500 })
         }
       } catch (error) {
         this.highlightEmailWithError = true

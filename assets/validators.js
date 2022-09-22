@@ -21,6 +21,13 @@ export function isValidCost (price) {
   const re = /^\d+(\.\d{2})?$/
   return re.test(price)
 }
+export function isValidPhone (phone) {
+  // eslint-disable-next-line no-useless-escape
+  const re = /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/
+
+  return re.test(phone)
+}
+
 // map object thanh key=value
 
 export function valiQuery (query) {

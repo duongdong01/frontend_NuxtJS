@@ -11,7 +11,7 @@
           {{ userName }} </a>
       </a-menu-item>
       <a-menu-item key="1">
-        <a href="##" class=" font-medium pr-1">
+        <a href="/order" class=" font-medium pr-1">
           <i class="cursor-pointer fa-solid fa-cart-shopping text-[1rem] text-black mx-1" />
           View order </a>
       </a-menu-item>

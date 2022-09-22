@@ -96,26 +96,47 @@ export default {
     }
   },
   computed: {
-    // isAddedBtn () {
-    //   return this.product.isAddedBtn
-    // }
-    // images () {
-    //   console.log('img', this.$route.params.images)
-    //   return this.$route.params.images
-    // },
-    // product () {
-    //   console.log(this.$route.params)
-    //   return this.$route.params
-    // }
+    isUserLoggedIn () {
+      return this.$store.getters.isUserLoggedIn
+    }
   },
   mounted () {
     this.productId()
   },
 
   methods: {
-    addToCart () {
+    openNotificationWithIcon (type, text) {
+      this.$notification[type]({
+        // message: 'Notification Title',
+        description:
+          text,
+        duration: 1.5
+        // top: '30'
+      })
+    },
+    async addToCart () {
       if (!this.value) {
-        alert('vui long chon Size')
+        this.openNotificationWithIcon('error', 'Please choose size')
+      } else if (this.isUserLoggedIn) {
+        try {
+          const token = localStorage.getItem('token')
+          const userData = await this.$api.auth.secret(token)
+          const cart = {
+            user: userData.data._id,
+            product: this.$route.params.id,
+            quantity: this.valueNumber,
+            size: this.value
+          }
+          await this.$api.cart.addToCart(cart)
+          this.$store.dispatch('dataCart')
+          console.log(cart)
+          // this.openNotificationWithIcon('success', 'Add cart successfully')
+          this.$toast.success('Add cart successfully', { timeout: 1500 })
+        } catch (error) {
+          console.log('error')
+        }
+      } else {
+        this.$store.commit('showLoginModal', true)
       }
     },
     onChangeRadio (e) {
