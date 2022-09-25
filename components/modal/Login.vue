@@ -67,18 +67,6 @@
                   </p>
                 </div>
               </div>
-              <div v-if="isUserLoggedIn" class="level">
-                <div class="text-center">
-                  <div>
-                    <p class="title">
-                      Welcome back!
-                    </p>
-                    <p class="heading">
-                      Now you are logged in
-                    </p>
-                  </div>
-                </div>
-              </div>
               <div class="m-4 flex lg:justify-between lg:flex-row flex-col items-center">
                 <button v-if="!isUserLoggedIn" type="submit" class="rounded-xl p-3 font-semibold bg-yellow hover:bg-yellow_hover text-white lg:w-1/3 w-full">
                   {{ loginBtnLabel }}
@@ -86,14 +74,11 @@
                 <p class="font-medium text-blue hover:text-black cursor-pointer hover:transition-all lg:m-0 m-1">
                   Forgot Password
                 </p>
-                <!-- <button v-if="isUserLoggedIn" type="button" class="rounded-xl p-3 bg-grey_light text-grey_dark" @click="closeModal">
-                  {{ btnLoggedInLabel }}
-                </button> -->
               </div>
             </section>
           </form>
           <!-- signup  -->
-          <Signup v-else />
+          <Signup v-else @to-login="updateLogin" />
 
           <div class="mx-4 flex-col px-5">
             <div class="md:hidden flex right-0  w-full justify-center space-y-1">
@@ -174,9 +159,14 @@ export default {
   },
 
   methods: {
+    updateLogin (e) {
+      this.islogin = true
+      console.log(e)
+    },
     changeIsLogin (a) {
       this.islogin = a
       // console.log(this.islogin)
+      this.$store.commit('isUserSignedUp', false)
     },
     closeModal () {
       this.$store.commit('showLoginModal', false)

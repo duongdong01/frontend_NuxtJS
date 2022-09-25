@@ -1,43 +1,36 @@
 <template>
   <div :class="[ openModal ? 'fixed flex modal-animation ' : 'hidden', 'modal' ]">
     <div class="modal-background" />
-    <div class="modal-wrapper-search ">
-      <div class=" flex float-right p-8">
+    <div class="modal-wrapper-search flex flex-col">
+      <div class=" right-0 absolute p-5">
         <button class="delete bg-white w-10 h-10 rounded-[50%] " aria-label="close" @click="closeModal">
           <i class="fa-regular fa-xmark text-[1.5rem] font-semibold" />
         </button>
+      </div>
+      <div class="flex justify-center items-center h-full input-search">
+        <a-input
+          v-model="valueSearch"
+          placeholder="Type keyword here"
+          class="w-2/3 mt-5 rounded-none font-medium text-white text-xl bg-transparent border-l-0 border-r-0 border-t-0 border-b-2"
+          @keyup="onSearch(valueSearch)"
+        />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { isValidEmail } from '@/assets/validators'
-
 export default {
   name: 'Search',
 
   data () {
     return {
-      modalTitle: 'Log in',
-      modalTitleLoggedIn: 'Welcome!',
-      loginBtnLabel: 'Log in',
-      emailRequiredLabel: 'Email required',
-      passwordRequiredLabel: 'Password required',
-      emailNotValidLabel: 'Valid email required',
-      btnLoggedInLabel: 'Close',
-      email: '',
-      password: '',
-      highlightEmailWithError: null,
-      highlightPasswordWithError: null,
-      isFormSuccess: false
+      valueSearch: ''
     }
   },
 
   computed: {
-    // isUserLoggedIn () {
-    //   return this.$store.getters.isUserLoggedIn
-    // },
+
     openModal () {
       if (this.$store.getters.isSearchModalOpen) {
         return true
@@ -51,49 +44,8 @@ export default {
     closeModal () {
       this.$store.commit('showSearchModal', false)
     },
-    checkForm (e) {
-      e.preventDefault()
-
-      if (this.email && this.password) {
-        this.highlightEmailWithError = false
-        this.highlightPasswordWithError = false
-        this.isFormSuccess = true
-        this.$store.commit('isUserLoggedIn', this.isFormSuccess)
-      }
-
-      if (!this.email) {
-        this.highlightEmailWithError = true
-
-        if (this.email && !isValidEmail(this.email)) {
-          this.emailRequiredLabel = this.emailNotValidLabel
-        }
-      } else {
-        this.highlightEmailWithError = false
-      }
-
-      if (!this.password) {
-        this.highlightPasswordWithError = true
-      } else {
-        this.highlightPasswordWithError = false
-      }
-    },
-    checkEmailOnKeyUp (emailValue) {
-      if (emailValue && isValidEmail(emailValue)) {
-        this.highlightEmailWithError = false
-      } else {
-        this.highlightEmailWithError = true
-
-        if (!isValidEmail(emailValue)) {
-          this.emailRequiredLabel = this.emailNotValidLabel
-        }
-      }
-    },
-    checkPasswordOnKeyUp (passwordValue) {
-      if (passwordValue) {
-        this.highlightPasswordWithError = false
-      } else {
-        this.highlightPasswordWithError = true
-      }
+    onSearch (value) {
+      console.log(value)
     }
   }
 }
@@ -105,5 +57,19 @@ export default {
   }
   .fa-check {
     @apply text-green;
+  }
+  .input-search{
+    .ant-input{
+      @apply text-center;
+    }
+    .ant-input:hover{
+      @apply border-x-0 border-t-0 bg-transparent border-b-[yellow];
+      border-right-width: 0px !important;
+
+    }
+    .ant-input:focus {
+      @apply border-l-0 border-r-0 border-t-0 border-b-2 border-yellow shadow-none outline-0;
+        border-right-width: 0px !important;
+    }
   }
 </style>

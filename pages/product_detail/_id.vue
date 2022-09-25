@@ -105,18 +105,9 @@ export default {
   },
 
   methods: {
-    openNotificationWithIcon (type, text) {
-      this.$notification[type]({
-        // message: 'Notification Title',
-        description:
-          text,
-        duration: 1.5
-        // top: '30'
-      })
-    },
     async addToCart () {
       if (!this.value) {
-        this.openNotificationWithIcon('error', 'Please choose size')
+        this.$toast.error('Please choose size', { timeout: 1500 })
       } else if (this.isUserLoggedIn) {
         try {
           const token = localStorage.getItem('token')

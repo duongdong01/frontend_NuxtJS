@@ -4,12 +4,16 @@ export function isValidEmail (email) {
   return re.test(email)
 }
 
-export function isValidName (name) {
+export function isValidUserName (name) {
   // eslint-disable-next-line no-useless-escape
   const re = /^[a-z][a-z\s]*$/
   return re.test(name)
 }
-
+export function isValidName (name) {
+  // eslint-disable-next-line no-useless-escape
+  const re = /^[a-zA-Z0-9]([._](?![._])|[a-zA-Z0-9]){6,18}[a-zA-Z0-9]$/
+  return re.test(name)
+}
 export function isValidPassword (pass) {
   // eslint-disable-next-line no-useless-escape
   const re = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/

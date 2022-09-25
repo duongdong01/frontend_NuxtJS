@@ -1,26 +1,24 @@
 <template>
-  <div class="flex flex-col mt-5 px-14">
-    <div class="tab_order">
-      <a-tabs default-active-key="1" @change="callback">
-        <a-tab-pane key="1" tab="All Transactions">
+  <div class="flex flex-col px-2">
+    <div class="tab_order-admin">
+      <a-tabs default-active-key="2a" @change="callback">
+        <!-- <a-tab-pane key="1a" tab="All Transactions">
           <div v-if="allTransaction.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
-              You have no transactions yet
+              There are no bills waiting
             </p>
           </div>
           <div v-for="(item,index) in allTransaction.listOrder" :key="index" class="mb-4">
             <ItemOrder
               :item-order="item"
-              :status="item.status"
-              :cancel="item.cancel"
             />
             <hr class="text-[#e8e8e8]">
           </div>
-          <div v-if="allTransaction.totalItem>=1" class="flex justify-center my-2">
+          <div v-if="allTransaction.totalItem>=1" class="flex justify-center">
             <a-pagination v-model="current" :total="allTransaction.pages*8" show-less-items :page-size="8" @change="onChangeAll" />
           </div>
-        </a-tab-pane>
-        <a-tab-pane key="2" tab="Wait For Confirmation" force-render>
+        </a-tab-pane> -->
+        <a-tab-pane key="2a" tab="Wait For Confirmation">
           <div v-if="waitForComfirm.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
               There are no bills waiting
@@ -29,16 +27,15 @@
           <div v-for="(item,index) in waitForComfirm.listOrder" :key="index" class="mb-4">
             <ItemOrder
               :item-order="item"
-              :status="item.status"
-              :cancel="item.cancel"
+              :comfirm="true"
             />
             <hr class="text-[#e8e8e8]">
           </div>
-          <div v-if="waitForComfirm.totalItem >=1" class="flex justify-center my-2">
+          <div v-if="waitForComfirm.totalItem >=1" class="flex justify-center">
             <a-pagination v-model="currentComfirm" :total="waitForComfirm.pages*8" show-less-items :page-size="8" @change="onChangeComfirm" />
           </div>
         </a-tab-pane>
-        <a-tab-pane key="3" tab="Successful Delivery">
+        <a-tab-pane key="3a" tab="Successful Delivery">
           <div v-if="itemSuccessful.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
               You have not had any successful orders yet
@@ -47,16 +44,14 @@
           <div v-for="(item,index) in itemSuccessful.listOrder" :key="index" class="mb-4">
             <ItemOrder
               :item-order="item"
-              :status="item.status"
-              :cancel="item.cancel"
             />
             <hr class="text-[#e8e8e8]">
           </div>
-          <div v-if="itemSuccessful.totalItem>=1" class="flex justify-center my-2">
+          <div v-if="itemSuccessful.totalItem>=1" class="flex justify-center">
             <a-pagination v-model="currentSuccess" :total="itemSuccessful.pages*8" show-less-items :page-size="8" @change="onChangeSuccess" />
           </div>
         </a-tab-pane>
-        <a-tab-pane key="4" tab="Order Has Been Canceled">
+        <a-tab-pane key="4a" tab="Order Canceled">
           <div v-if="itemCanceled.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
               No orders have been canceled
@@ -65,12 +60,10 @@
           <div v-for="(item,index) in itemCanceled.listOrder" :key="index" class="mb-4">
             <ItemOrder
               :item-order="item"
-              :status="item.status"
-              :cancel="item.cancel"
             />
             <hr class="text-[#e8e8e8]">
           </div>
-          <div v-if="itemCanceled.totalItem >=1" class="flex justify-center my-2">
+          <div v-if="itemCanceled.totalItem >=1" class="flex justify-center">
             <a-pagination v-model="currentCancel" :total="itemCanceled.pages*8" show-less-items :page-size="8" @change="onChangeCancel" />
           </div>
         </a-tab-pane>
@@ -79,7 +72,7 @@
   </div>
 </template>
 <script>
-import ItemOrder from '@/components/order/ItemOrder.vue'
+import ItemOrder from '@/components/admin/orders/TableOrder.vue'
 export default {
   components: {
     ItemOrder
@@ -97,7 +90,7 @@ export default {
     }
   },
   mounted () {
-    this.getAllTransaction(8, 1)
+    // this.getAllTransaction(8, 1)
     this.getWaitForComfirm(8, 1)
     this.getSuccessful(8, 1)
     this.getCanceled(8, 1)
@@ -106,53 +99,44 @@ export default {
     callback (key) {
       console.log(key)
     },
-    async getAllTransaction (limit, page) {
-      try {
-        const token = localStorage.getItem('token')
-        const userData = await this.$api.auth.secret(token)
-        const dataOrder = await this.$api.order.getOrder({ user: userData.data._id, cancel: 0, limit, page })
-        this.allTransaction = dataOrder.listOrder
-        // console.log('allTran: ', this.allTransaction)
-      } catch (error) {
-        console.log(error)
-      }
-    },
+    // async getAllTransaction (limit, page) {
+    //   try {
+    //     const dataOrder = await this.$api.order.getOrderAdmin({ cancel: 0, limit, page })
+
+    //     this.allTransaction = dataOrder.listOrder
+    //   } catch (error) {
+    //     console.log(error)
+    //   }
+    // },
     async getWaitForComfirm (limit, page) {
       try {
-        const token = localStorage.getItem('token')
-        const userData = await this.$api.auth.secret(token)
-        const dataOrder = await this.$api.order.getOrder({ user: userData.data._id, cancel: 0, status: 0, limit, page })
+        const dataOrder = await this.$api.order.getOrderAdmin({ cancel: 0, status: 0, limit, page })
         this.waitForComfirm = dataOrder.listOrder
-        // console.log('waitForComfirm: ', this.waitForComfirm)
       } catch (error) {
         console.log(error)
       }
     },
     async getSuccessful (limit, page) {
       try {
-        const token = localStorage.getItem('token')
-        const userData = await this.$api.auth.secret(token)
-        const dataOrder = await this.$api.order.getOrder({ user: userData.data._id, cancel: 0, status: 1, limit, page })
+        const dataOrder = await this.$api.order.getOrderAdmin({ cancel: 0, status: 1, limit, page })
         this.itemSuccessful = dataOrder.listOrder
-        // console.log('itemSuccessful: ', this.itemSuccessful)
       } catch (error) {
         console.log(error)
       }
     },
     async getCanceled (limit, page) {
       try {
-        const token = localStorage.getItem('token')
-        const userData = await this.$api.auth.secret(token)
-        const dataOrder = await this.$api.order.getOrder({ user: userData.data._id, cancel: 1, limit, page })
+        const dataOrder = await this.$api.order.getOrderAdmin({ cancel: 1, limit, page })
         this.itemCanceled = dataOrder.listOrder
       } catch (error) {
         console.log(error)
       }
     },
-    onChangeAll (value) {
-      console.log('page: ', value)
-      this.getAllTransaction(8, value)
-    },
+    // onChangeAll (value) {
+    //   // getAllTransaction()
+    //   console.log('page: ', value)
+    //   this.getAllTransaction(8, value)
+    // },
     onChangeComfirm (value) {
       console.log('page: ', value)
       this.getWaitForComfirm(8, value)
@@ -169,36 +153,36 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.tab_order{
+  <style lang="scss">
+  .tab_order-admin{
 
-    .ant-tabs-nav-wrap{
-        @apply mt-3;
-    }
-    .ant-tabs-bar{
-        @apply border-0
-    }
-    .ant-tabs-nav-scroll{
-        @apply w-full flex justify-center;
+      .ant-tabs-nav-wrap{
+          @apply mt-3;
+      }
+      .ant-tabs-bar{
+          @apply border-0
+      }
+      .ant-tabs-nav-scroll{
+          @apply w-full flex justify-center;
 
-    }
-    .ant-tabs-nav .ant-tabs-tab-active{
-        @apply text-orange;
-    }
-    .ant-tabs-tab{
-        @apply font-semibold text-black text-[1rem] leading-6;
-    }
-    .ant-tabs-tab:hover {
-        @apply text-orange
-    }
-    .ant-tabs-tab-active{
-        @apply text-orange
-    }
-    .ant-tabs-ink-bar{
-        @apply bg-orange
-    }
-    .ant-tabs-nav .ant-tabs-tab:hover{
-        @apply text-orange
-    }
-}
-</style>
+      }
+      .ant-tabs-nav .ant-tabs-tab-active{
+          @apply text-orange;
+      }
+      .ant-tabs-tab{
+          @apply font-semibold text-black text-[1rem] leading-6;
+      }
+      .ant-tabs-tab:hover {
+          @apply text-orange
+      }
+      .ant-tabs-tab-active{
+          @apply text-orange
+      }
+      .ant-tabs-ink-bar{
+          @apply bg-orange
+      }
+      .ant-tabs-nav .ant-tabs-tab:hover{
+          @apply text-orange
+      }
+  }
+  </style>

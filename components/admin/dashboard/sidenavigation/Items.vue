@@ -8,12 +8,12 @@
       <medias-icon />
     </sidenav-item>
 
-    <sidenav-item title="Contacts" to="/admin/contact">
-      <contact-icon />
+    <sidenav-item title="Orders" to="/admin/orders">
+      <servers-icon />
     </sidenav-item>
 
-    <sidenav-item title="Servers" to="/admin/servers">
-      <servers-icon />
+    <sidenav-item title="Contacts" to="/admin/contact">
+      <contact-icon />
     </sidenav-item>
 
     <sidenav-item title="Settings" to="/admin/settings">

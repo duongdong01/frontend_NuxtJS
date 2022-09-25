@@ -85,7 +85,7 @@
   </div>
 </template>
 <script>
-import { isValidName, isValidPhone } from '@/assets/validators.js'
+import { isValidUserName, isValidPhone } from '@/assets/validators.js'
 export default {
   props: ['totalCart', 'cartId'],
   data () {
@@ -101,7 +101,7 @@ export default {
           required: true,
           trigger: 'blur',
           validator (rule, value, callback) {
-            if (isValidName(value)) {
+            if (isValidUserName(value)) {
               callback()
             } else {
               callback(new Error('Invalid name'))

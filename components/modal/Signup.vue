@@ -55,12 +55,15 @@
       <div v-if="isUserSignedUp">
         <div class="text-center">
           <div>
-            <p class="text-4xl">
-              Welcome {{ name }}!
-            </p>
             <p class="text-2xl">
               Now you are a member
             </p>
+            <p class="text-2xl">
+              Please click login to join the shopping !!
+            </p>
+            <button class="rounded-xl p-3 bg-yellow text-white w-full hover:bg-yellow_hover font-semibold lg:w-1/3 my-1" @click="login(true)">
+              Login Now
+            </button>
           </div>
         </div>
       </div>
@@ -69,9 +72,9 @@
       <button v-if="!isUserSignedUp" class="rounded-xl p-3 bg-yellow text-white w-full hover:bg-yellow_hover font-semibold lg:w-1/3">
         {{ primaryBtnLabel }}
       </button>
-      <button v-if="isUserSignedUp" type="button" class="rounded-xl p-3 bg-grey_light text-grey_dark" @click="closeModal">
+      <!-- <button v-if="isUserSignedUp" type="button" class="rounded-xl p-3 bg-grey_light text-grey_dark" @click="closeModal">
         {{ btnRegisteredLabel }}
-      </button>
+      </button> -->
     </div>
   </form>
 </template>
@@ -84,10 +87,7 @@ export default {
 
   data () {
     return {
-      modalTitle: 'Sign up',
-      modalTitleRegistered: 'Welcome ',
       primaryBtnLabel: 'Sign up',
-      btnRegisteredLabel: 'Close',
       notEqualErrorLabel: 'Passwords must be equal',
       passwordErrorLabel: 'Password required',
       nameErrorLabel: 'Name required',
@@ -119,6 +119,9 @@ export default {
   },
 
   methods: {
+    login (islogin) {
+      this.$emit('to-login', islogin)
+    },
     closeModal () {
       this.$store.commit('showSignupModal', false)
     },
@@ -128,13 +131,13 @@ export default {
       try {
         if (this.name && isValidEmail(this.email) && isValidPassword(this.password) && this.repeatPassword) {
           await this.$api.auth.signup(this.name, this.email, this.password)
-          alert('thành công')
+          // alert('thành công')
           this.highlightEmailWithError = false
           this.highlightPasswordWithError = false
           this.isFormSuccess = true
           this.$store.commit('setUserName', this.name)
           this.$store.commit('isUserSignedUp', this.isFormSuccess)
-          this.$store.commit('isUserLoggedIn', this.isFormSuccess)
+          // this.$store.commit('isUserLoggedIn', this.isFormSuccess)
         }
       } catch (error) {
         console.log(error)
@@ -146,7 +149,7 @@ export default {
         this.isFormSuccess = true
         this.$store.commit('setUserName', this.name)
         this.$store.commit('isUserSignedUp', this.isFormSuccess)
-        this.$store.commit('isUserLoggedIn', this.isFormSuccess)
+        // this.$store.commit('isUserLoggedIn', this.isFormSuccess)
       }
 
       if (this.name && isValidName(this.name)) {
