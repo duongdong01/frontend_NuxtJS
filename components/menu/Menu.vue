@@ -6,22 +6,45 @@
     :style="{ lineHeight: '80px' }"
   >
     <a-menu-item key="1">
-      HOME
+      <nuxt-link to="/" tag="li">
+        HOME
+      </nuxt-link>
     </a-menu-item>
-    <a-menu-item key="2">
-      SHOP
+    <a-menu-item key="2" class="relative sub_shop">
+      SHOP<a-icon type="down" class="absolute leading-[78px] font-medium pl-[1px]" />
+      <ul class="hidden absolute bg-[#fef5ef] item-menu_shop">
+        <li @click="searchSubject(1)">
+          Men
+        </li>
+        <li @click="searchSubject(0)">
+          Woman
+        </li>
+      </ul>
     </a-menu-item>
     <a-menu-item key="3">
       BLOG
     </a-menu-item>
     <a-menu-item key="4">
-      PAGES
+      <nuxt-link to="/contact" tag="li">
+        CONTACT
+      </nuxt-link>
     </a-menu-item>
     <a-menu-item key="5">
-      ABOUT US
+      <nuxt-link to="/about" tag="li">
+        ABOUT US
+      </nuxt-link>
     </a-menu-item>
   </a-menu>
 </template>
+<script>
+export default {
+  methods: {
+    searchSubject (value) {
+      this.$router.replace({ path: '/search', query: { keyword: '', subject: value } })
+    }
+  }
+}
+</script>
 
 <style lang="scss" scoped>
 .ant-menu-horizontal{
@@ -36,5 +59,18 @@
 .ant-menu-horizontal > .ant-menu-item-selected,
 .ant-menu-horizontal > .ant-menu-item, .ant-menu-horizontal > .ant-menu-submenu {
     border-bottom: none;
+}
+
+.sub_shop:hover{
+    .item-menu_shop{
+      @apply  animate-[flipInMenu_.5s_ease-in] block;
+    }
+}
+.item-menu_shop{
+  @apply leading-none mt-[-1px] w-44 bg-[#ffffff] ;
+  li{
+    @apply w-full px-8 py-4 text-black hover:text-yellow_hover transition-all ease-out duration-300;
+
+  }
 }
 </style>

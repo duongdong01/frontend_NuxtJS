@@ -7,13 +7,45 @@
           <i class="fa-regular fa-xmark text-[1.5rem] font-semibold" />
         </button>
       </div>
-      <div class="flex justify-center items-center h-full input-search">
-        <a-input
-          v-model="valueSearch"
-          placeholder="Type keyword here"
-          class="w-2/3 mt-5 rounded-none font-medium text-white text-xl bg-transparent border-l-0 border-r-0 border-t-0 border-b-2"
-          @keyup="onSearch(valueSearch)"
-        />
+      <div class="h-full input-search flex flex-col justify-center items-center">
+        <form class="w-full  flex flex-col justify-center items-center" @submit.prevent="searchKeyWord(valueSearch)">
+          <a-input
+            v-model="valueSearch"
+            placeholder="Type keyword here"
+            class="w-2/3 mb-5 rounded-none font-medium text-white text-xl bg-transparent border-l-0 border-r-0 border-t-0 border-b-2"
+            @keyup="onSearch(valueSearch)"
+          />
+          <button class="bg-transparent text-grey_light/10 text-lg font-normal" type="submit">
+            Search
+          </button>
+        </form>
+        <div class="mt-2 w-2/3 max-h-60 space-y-3 overflow-y-auto">
+          <ul v-for="(item,index) in data.products" :key="index">
+            <div class="flex space-x-6">
+              <div class="flex cursor-pointer">
+                <img :src="item.images[0]" alt="photo" class="w-20">
+              </div>
+              <div class="text-white font-medium text-lg">
+                <p @click="closeModal">
+                  <nuxt-link
+                    :to="{
+                      name:'product_detail-id',
+                      params: {
+                        id: item._id
+                      }
+                    }"
+                    class="cursor-pointer hover:text-yellow_hover"
+                  >
+                    {{ item.name }}
+                  </nuxt-link>
+                </p>
+                <p class=" font-normal">
+                  ${{ item.price }}
+                </p>
+              </div>
+            </div>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -25,7 +57,8 @@ export default {
 
   data () {
     return {
-      valueSearch: ''
+      valueSearch: '',
+      data: {}
     }
   },
 
@@ -43,9 +76,26 @@ export default {
   methods: {
     closeModal () {
       this.$store.commit('showSearchModal', false)
+      console.log('ok')
     },
     onSearch (value) {
       console.log(value)
+      this.getProductSearchKeyUp(value)
+    },
+    async getProductSearchKeyUp (query) {
+      try {
+        const restData = await this.$api.product.searchProduct({ search: query, page: 1, limit: 20, sort: '-_id' })
+        console.log(restData)
+        this.data = restData.products
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    searchKeyWord (keyword) {
+      const subject = ''
+      console.log('search keyWord: ', keyword)
+      this.$router.replace({ path: '/search', query: { keyword, subject } })
+      this.closeModal()
     }
   }
 }
@@ -70,6 +120,17 @@ export default {
     .ant-input:focus {
       @apply border-l-0 border-r-0 border-t-0 border-b-2 border-yellow shadow-none outline-0;
         border-right-width: 0px !important;
+    }
+  }
+  .list-search{
+    .ant-list-item-meta-title{
+      a{
+
+        @apply text-white font-medium;
+      }
+    }
+    .ant-list-item-meta-description{
+      @apply text-white font-medium;
     }
   }
 </style>

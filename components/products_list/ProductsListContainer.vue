@@ -10,11 +10,11 @@
         {{ noProductLabel }}
       </h2>
     </div>
-    <div class="flex justify-center items-center pt-6 pb-4">
+    <!-- <div class="flex justify-center items-center pt-6 pb-4">
       <h2 class="text-black lg:text-2xl cursor-pointer text-xl hover:text-orange transition-all">
         VIEW ALL PRODUCTS
       </h2>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -29,11 +29,14 @@ export default {
   props: {
     // eslint-disable-next-line vue/require-default-prop
     products: {
-      type: Array
+      type: Array,
+      default: () => []
     }
   },
 
   data () {
+    console.log(this.products)
+
     return {
       id: '',
       noProductLabel: 'No product found'

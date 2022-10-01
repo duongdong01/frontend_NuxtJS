@@ -117,9 +117,6 @@ export default {
     display: inline-block;
     border-radius: 0;
 }
-// .flipInX{
-//   animation-name:flipInX;
-// }
 .hero_img img {
     // top: -163px;
   @apply lg:top-[-163px] lg:right-0 lg:max-w-[90%] max-w-[170%];

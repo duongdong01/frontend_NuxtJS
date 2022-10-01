@@ -1,6 +1,13 @@
 <template>
   <div class="table_cart">
-    <a-table :row-selection="rowSelection" :columns="columns" :data-source="carts" :row-key="record=>record._id" bordered>
+    <a-table
+      :loading="loading"
+      :row-selection="rowSelection"
+      :columns="columns"
+      :data-source="carts"
+      :row-key="record=>record._id"
+      bordered
+    >
       <template slot="product" slot-scope="text,record">
         <img :src="record.product.images[0]" alt="photo" class="w-16">
       </template>
@@ -123,11 +130,11 @@
         <hr class="mt-5 bg-[#e8e8e8] text-[#e8e8e8] h-[1.5px]">
 
         <div class="flex sm:justify-between w-1/2 mx-auto my-10 flex-col sm:flex-row">
-          <button ref="checkOutCarts" class="bg-green text-black py-2 px-2 text-[1rem] font-medium rounded-sm" disabled @click="showBilling">
+          <button ref="checkOutCarts" class="bg-green text-white py-2 px-2 text-[1rem] font-medium rounded-sm" disabled @click="showBilling">
             <i class="fa-solid fa-cart-shopping" />
             Process to checkout ({{ numberProduct }})
           </button>
-          <button ref="deleteCarts" disabled class="bg-red text-black py-2 px-2 text-[1rem] font-medium rounded-sm" @click="deleteCarts">
+          <button ref="deleteCarts" disabled class="bg-red text-white py-2 px-2 text-[1rem] font-medium rounded-sm" @click="deleteCarts">
             <i class="fa-solid fa-trash" />
             Delete products ({{ numberProduct }})
           </button>
@@ -166,6 +173,7 @@ export default {
       item: 0,
       numberProduct: 0,
       fee: 0,
+      loading: false,
       intoMoney: 0,
       totalCarts: {},
       selectedSize: [],
@@ -252,6 +260,7 @@ export default {
     },
     async editItem (idCartItem) {
       try {
+        this.loading = true
         const token = localStorage.getItem('token')
         const userData = await this.$api.auth.secret(token)
         const sizeUpdate = this.selectedSize.find((item) => {
@@ -292,6 +301,8 @@ export default {
       } catch (error) {
         this.$toast.error('System error please try again later', { timeout: 1500 })
         console.log(error)
+      } finally {
+        this.loading = false
       }
     },
     async deleteCarts () {

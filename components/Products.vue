@@ -15,7 +15,6 @@
             originalPrice:product.originalPrice,
             sold:product.sold,
             view:product.view,
-            reviews: product.reviews,
           }
         }"
       >
@@ -24,6 +23,11 @@
           <img class="rounded-t-2xl img_show2 absolute top-0 opacity-0" :src="product.images[1]" alt="Placeholder image">
         </div>
       </nuxt-link>
+      <div class="top-0 absolute left-0 bg-[#00D100] m-4 rounded-sm  text-white">
+        <p class="px-1 py-[2px] font-medium">
+          Sold: {{ product.sold }}
+        </p>
+      </div>
       <div class="m-4 icon_product top-0" :title="addToFavouriteLabel" @click="saveToFavorite(product._id)">
         <span class="icon">
           <i class="far fa-heart" />
@@ -139,14 +143,14 @@ export default {
         this.$store.commit('showLoginModal', true)
       }
     },
-    removeFromCart (id) {
-      const data = {
-        id,
-        status: false
-      }
-      this.$store.commit('removeFromCart', id)
-      this.$store.commit('setAddedBtn', data)
-    },
+    // removeFromCart (id) {
+    //   const data = {
+    //     id,
+    //     status: false
+    //   }
+    //   this.$store.commit('removeFromCart', id)
+    //   this.$store.commit('setAddedBtn', data)
+    // },
     saveToFavorite (id) {
       const isUserLogged = this.$store.state.userInfo.isLoggedIn
 
@@ -155,21 +159,7 @@ export default {
       } else {
         this.$store.commit('showLoginModal', true)
       }
-    },
-    removeFromFavourite (id) {
-      this.$store.commit('removeFromFavourite', id)
-    },
-    onSelectQuantity (id) {
-      const data = {
-        id,
-        quantity: this.selected
-      }
-      this.$store.commit('quantity', data)
     }
-    // onChange (value) {
-    //   console.log(value)
-    //   this.selected = value
-    // }
   }
 }
 </script>

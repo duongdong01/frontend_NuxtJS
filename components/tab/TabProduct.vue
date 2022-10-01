@@ -12,12 +12,27 @@
       <a-tabs default-active-key="1" @change="callback">
         <a-tab-pane key="1" tab="NEW ARRIVAL" class="font-semibold">
           <ProductsList :products="newProducts" />
+          <div class="flex justify-center items-center py-6">
+            <h2 class="text-black lg:text-2xl cursor-pointer text-xl hover:text-orange transition-all">
+              VIEW ALL PRODUCTS
+            </h2>
+          </div>
         </a-tab-pane>
         <a-tab-pane key="2" tab="BEST SELLER" class="font-semibold" force-render>
           <ProductsList :products="bestProducts" />
+          <div class="flex justify-center items-center py-6">
+            <h2 class="text-black lg:text-2xl cursor-pointer text-xl hover:text-orange transition-all">
+              VIEW ALL PRODUCTS
+            </h2>
+          </div>
         </a-tab-pane>
         <a-tab-pane key="3" tab="ON SALE">
           <ProductsList :products="onSaleProducts" />
+          <div class="flex justify-center items-center py-6">
+            <h2 class="text-black lg:text-2xl cursor-pointer text-xl hover:text-orange transition-all">
+              VIEW ALL PRODUCTS
+            </h2>
+          </div>
         </a-tab-pane>
       </a-tabs>
     </div>

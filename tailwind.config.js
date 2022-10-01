@@ -112,6 +112,27 @@ module.exports = {
         '100%': {
           transform: 'perspective(400px)'
         }
+      },
+      flipInMenu: {
+        '0%': {
+          transform: 'perspective(400px) rotateX(90deg)',
+          opacity: 0
+        },
+        '40%': {
+          transform: 'perspective(400px) rotateX(60deg)'
+          // opacity: 0.5
+
+        },
+        '60%': {
+          transform: 'perspective(400px) rotateX(30deg)',
+          opacity: '1'
+        },
+        '80%': {
+          transform: 'perspective(400px) rotateX(1deg)'
+        },
+        '100%': {
+          transform: 'perspective(400px)'
+        }
       }
     },
     backgroundSize: {

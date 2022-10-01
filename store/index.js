@@ -1,5 +1,6 @@
 export const state = () => ({
   carts: [],
+  productSearch: [],
   userInfo: {
     isLoggedIn: false,
     isSignedUp: false,
@@ -20,6 +21,9 @@ export const state = () => ({
 export const getters = {
   carts: (state) => {
     return state.carts
+  },
+  productSearch: (state) => {
+    return state.productSearch
   },
   isAdmin: (state) => {
     return state.userInfo.isAdmin
@@ -56,6 +60,9 @@ export const mutations = {
   },
   resetCart: (state) => {
     state.carts = []
+  },
+  setProductSearch: (state, data) => {
+    state.productSearch.push(...data)
   },
   isUserLoggedIn: (state, isUserLoggedIn) => {
     state.userInfo.isLoggedIn = isUserLoggedIn
