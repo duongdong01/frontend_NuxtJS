@@ -3,6 +3,7 @@ import Auth from '@/api/auth'
 import Product from '@/api/product'
 import Cart from '@/api/cart'
 import Order from '@/api/order'
+import WishList from '@/api/wishlist'
 export default (context, inject) => {
   // Initialize API factories
   const factories = {
@@ -10,7 +11,8 @@ export default (context, inject) => {
     product: Product(context.$axios),
     comment: Comment(context.$axios),
     cart: Cart(context.$axios),
-    order: Order(context.$axios)
+    order: Order(context.$axios),
+    wishlist: WishList(context.$axios)
   }
 
   // Inject $api

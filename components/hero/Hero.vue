@@ -7,7 +7,7 @@
             <div class="banner_text_one ">
               <h1 class="flipInX animate-[flipIn_3s_ease-in] delay-300">
                 Live For <span class="flipInX animate-[flipIn_3s_ease-in] delay-300" style="animation-duration: 2s; animation-delay: 0.5s;">Fashion</span>
-              </h1> <h3>Save Up To 50%</h3> <a href="/shop/shop-3" class="theme-btn-one bg-blacks btn_md">Shop Now</a>
+              </h1> <h3>Save Up To 50%</h3> <a href="/shop" class="theme-btn-one bg-blacks btn_md">Shop Now</a>
             </div>
           </div>
           <div class="col-lg-6">

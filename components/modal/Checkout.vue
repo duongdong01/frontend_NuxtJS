@@ -14,11 +14,11 @@
         <section class="p-5 rounded-b-2xl">
           <div>
             <div v-for="(item,index) in carts" :key="index" class="box">
-              <div class="flex">
-                <div class="w-24">
+              <div class="grid grid-cols-6">
+                <div class="w-24 col-span-2">
                   <img :src="item.product.images[0]" alt="photo">
                 </div>
-                <div class="flex flex-col justify-center pl-2 text-black ">
+                <div class="flex flex-col justify-center sm:pl-2 pl-3 text-black col-span-4">
                   <p class="font-semibold">
                     {{ item.product.name }}
                   </p>
@@ -27,7 +27,7 @@
                 </div>
               </div>
               <div class="flex justify-center items-center">
-                <i class="fa-regular fa-trash-can text-red cursor-pointer text-lg mr-[10px]" @click="removeFromCart(item._id)" />
+                <i class="fa-regular fa-trash-can text-red cursor-pointer text-lg" @click="removeFromCart(item._id)" />
               </div>
             </div>
             <div v-if="carts.length === 0">

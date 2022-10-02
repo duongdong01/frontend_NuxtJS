@@ -196,6 +196,7 @@ export default {
           this.$store.commit('isUserLoggedIn', this.isFormSuccess)
           this.$store.commit('setUserName', resData.data.info.username)
           this.$store.dispatch('dataCart')
+          this.$store.dispatch('dataWishlist')
           this.$toast.success('Logged in successfully', { timeout: 1500 })
         }
       } catch (error) {

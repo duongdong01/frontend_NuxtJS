@@ -143,19 +143,22 @@ export default {
         this.$store.commit('showLoginModal', true)
       }
     },
-    // removeFromCart (id) {
-    //   const data = {
-    //     id,
-    //     status: false
-    //   }
-    //   this.$store.commit('removeFromCart', id)
-    //   this.$store.commit('setAddedBtn', data)
-    // },
-    saveToFavorite (id) {
-      const isUserLogged = this.$store.state.userInfo.isLoggedIn
 
-      if (isUserLogged) {
-        this.$store.commit('addToFavourite', id)
+    async saveToFavorite (id) {
+      if (this.isUserLogged) {
+        try {
+          const token = localStorage.getItem('token')
+          const userData = await this.$api.auth.secret(token)
+          const wishlist = {
+            userId: userData.data._id,
+            productId: id
+          }
+          await this.$api.wishlist.addWishList(wishlist)
+          this.$toast.success('Add wishlist successfully', { timeout: 1500 })
+          this.$store.dispatch('dataWishlist')
+        } catch (error) {
+          console.log(error)
+        }
       } else {
         this.$store.commit('showLoginModal', true)
       }

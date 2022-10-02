@@ -1,43 +1,43 @@
 <template>
   <div :class="[ openModal ? 'fixed flex' : 'hidden', 'modal-checkout' ]">
-    <div class="modal-background" @click="closeModal(false)" />
+    <div class="modal-background" @click="closeModal()" />
     <div class="modal-wrapper-checkout modal-animation-close">
       <div class="bg-white flex items-center justify-between  p-5">
         <p class="text-xl font-semibold">
           {{ modalTitle }}
         </p>
-        <button class="delete bg-[#efefef] w-10 h-10 rounded-[50%] " aria-label="close" @click="closeModal(false)">
+        <button class="delete bg-[#efefef] w-10 h-10 rounded-[50%] " aria-label="close" @click="closeModal()">
           <i class="fa-regular fa-xmark text-[1.5rem] font-semibold" />
         </button>
       </div>
       <div class="overflow-y-auto h-[85vh]">
         <section class="p-5 rounded-b-2xl">
           <div>
-            <div v-for="product in productsInWishlist" :key="product.id" class="box">
-              <div class="flex">
-                <div class="w-24">
-                  <img src="https://bulma.io/images/placeholders/1280x960.png" alt="photo">
+            <div v-for="item in wishList" :key="item._id" class="box">
+              <div class="grid grid-cols-6">
+                <div class="w-24 col-span-2">
+                  <img :src="item.product.images[0]" alt="photo" class="w-24">
                 </div>
-                <div class="flex flex-col justify-center pl-2 font-semibold">
-                  <p>{{ product.title }}  </p>
+                <div class="flex flex-col justify-center sm:pl-2 pl-3 font-semibold col-span-4">
+                  <p class="font-semibold text-black">
+                    {{ item.product.name }}
+                  </p>
+                  <p>${{ item.product.price }}  </p>
                 </div>
               </div>
               <div class="flex justify-center items-center">
-                <i class="fa-regular fa-trash-can text-red cursor-pointer text-lg mr-[10px]" @click="removeFromFavourite(product.id)" />
+                <i class="fa-regular fa-trash-can text-red cursor-pointer text-lg ml-[2px]" @click="removeFromFavourite(item._id)" />
               </div>
-              <!-- <button class="rounded-xl p-3 text-white bg-red" @click="removeFromCart(product.id)">
-                {{ removeLabel }}
-              </button> -->
             </div>
-            <!-- <div v-if="productsInWishlist.length === 0">
+            <div v-if="wishList.length === 0">
               <p>{{ wishEmptyLabel }}</p>
-            </div> -->
+            </div>
           </div>
         </section>
         <div class="m-4">
-          <!-- <button v-show="productsInWishlist.length > 0 && !isCheckoutSection" class="rounded-xl p-3 bg-blue text-white w-full">
-            View Wishlish
-          </button> -->
+          <button v-show="wishList.length > 0" class="rounded-xl p-3 bg-black hover:opacity-80 text-white w-full" @click="onNextBtn">
+            VIEW WISHLIST
+          </button>
         </div>
       </div>
     </div>
@@ -45,23 +45,19 @@
 </template>
 
 <script>
-import { getByTitle } from '@/assets/filters'
 export default {
   name: 'WishLish',
 
   data () {
     return {
       modalTitle: 'Wishlist',
-      removeLabel: 'Remove from cart',
-      wishEmptyLabel: 'Your wish list is empty',
-      closeLabel: 'Close',
-      isCheckoutSection: false
+      wishEmptyLabel: 'Your wish list is empty'
     }
   },
 
   computed: {
-    products () {
-      return this.$store.getters.productsAdded
+    wishList () {
+      return this.$store.getters.wishlist
     },
     openModal () {
       if (this.$store.getters.isWishlistModalOpen) {
@@ -70,45 +66,29 @@ export default {
         return false
       }
     },
-    productsInWishlist () {
-      if (this.$store.state.userInfo.hasSearched) {
-        return this.getProductByTitle()
-      } else {
-        return this.$store.getters.productsAddedToFavourite
-      }
-    },
     isUserLoggedIn () {
       return this.$store.getters.isUserLoggedIn
     }
   },
+  mounted () {
 
+  },
   methods: {
-    closeModal (reloadPage) {
+    closeModal () {
       this.$store.commit('showWishlistModal', false)
-
-      if (reloadPage) {
-        window.location.reload()
+    },
+    onNextBtn () {
+      this.$router.push('/wishlist')
+      this.closeModal()
+    },
+    async removeFromFavourite (wishlistId) {
+      try {
+        await this.$api.wishlist.deleteWishlist({ wishlistId })
+        this.$store.dispatch('dataWishlist')
+        this.$toast.success('Product removed from wishlist successfully', { timeout: 1500 })
+      } catch (error) {
+        console.log(error)
       }
-    },
-    removeFromFavourite (id) {
-      this.$store.commit('removeFromFavourite', id)
-    },
-    getProductByTitle () {
-      const {
-        getters: {
-          productsAddedToFavourite
-        },
-        state: {
-          userInfo: {
-            productTitleSearched
-          }
-        }
-      } = this.$store
-      // eslint-disable-next-line no-return-assign
-      return this.productsFiltered = getByTitle(productsAddedToFavourite, productTitleSearched)
-    },
-    onPrevBtn () {
-      this.isCheckoutSection = false
     }
   }
 }

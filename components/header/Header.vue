@@ -13,7 +13,7 @@
       <div class="mr-7 cursor-pointer" @click="showWishlistModal">
         <!-- <nuxt-link :to="{ name: 'user-wishlist' }" tag="span" class="icon">
         </nuxt-link> -->
-        <span class="item_count absolute border-2">{{ 0 }}</span>
+        <span class="item_count absolute border-2">{{ wishList.length }}</span>
         <i class="fa-regular hover_item fa-heart lg:text-xl text-lg text-black" />
       </div>
       <div class="mr-7">
@@ -70,6 +70,9 @@ export default {
     carts () {
       return this.$store.getters.carts
     },
+    wishList () {
+      return this.$store.getters.wishlist
+    },
     isUserLoggedIn () {
       return this.$store.getters.isUserLoggedIn
     },
@@ -95,10 +98,10 @@ export default {
           this.$store.commit('isAdmin', resData.admin)
         }
 
-        console.log('username', userData)
         this.$store.commit('setUserName', userData.data.username)
         this.$store.commit('isUserLoggedIn', true)
         this.$store.dispatch('dataCart')
+        this.$store.dispatch('dataWishlist')
       } catch (error) {
         console.log(error)
       }
@@ -121,11 +124,6 @@ export default {
         this.$refs.menu.classList.remove('fixeds')
       }
     },
-    // closeDropdown () {
-    //   setTimeout(() => {
-    //     this.showDropdown = false
-    //   }, 100)
-    // },
     showCheckoutModal () {
       if (this.isUserLoggedIn) {
         this.$store.commit('showCheckoutModal', true)
@@ -150,9 +148,6 @@ export default {
       console.log('show search')
       this.$store.commit('showSearchModal', true)
     },
-    // onShowDropdown () {
-    //   this.showDropdown = !this.showDropdown
-    // },
     logout () {
       this.$store.commit('isUserLoggedIn', false)
       this.$store.commit('isUserSignedUp', false)

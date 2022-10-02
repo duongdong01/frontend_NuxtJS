@@ -1,5 +1,6 @@
 export const state = () => ({
   carts: [],
+  wishlist: [],
   productSearch: [],
   userInfo: {
     isLoggedIn: false,
@@ -19,6 +20,9 @@ export const state = () => ({
 })
 
 export const getters = {
+  wishlist: (state) => {
+    return state.wishlist
+  },
   carts: (state) => {
     return state.carts
   },
@@ -55,6 +59,12 @@ export const getters = {
 }
 
 export const mutations = {
+  setWishlist: (state, data) => {
+    state.wishlist.push(...data)
+  },
+  resetWishlist: (state, data) => {
+    state.wishlist = []
+  },
   setCart: (state, data) => {
     state.carts.push(...data)
   },
@@ -114,7 +124,19 @@ export const actions = {
     const userData = await this.$api.auth.secret(token)
     const dataCart = await this.$api.cart.getCarts(userData.data._id)
     commit('setCart', dataCart.data.carts)
-    console.log(dataCart.data.carts)
+    // console.log(dataCart.data.carts)
+  },
+  async dataWishlist ({ commit }) {
+    try {
+      commit('resetWishlist')
+      const token = localStorage.getItem('token')
+      const userData = await this.$api.auth.secret(token)
+      const restData = await this.$api.wishlist.getWishList(userData.data._id)
+      console.log('restDataWL: ', restData)
+      commit('setWishlist', restData.data.listWL)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 }
