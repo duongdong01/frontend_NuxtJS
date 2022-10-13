@@ -47,7 +47,8 @@ export default {
   plugins: [
     '@/plugins/antd-ui',
     '@/plugins/api',
-    '@/plugins/toast'
+    '@/plugins/toast',
+    '@/plugins/table'
 
   ],
 

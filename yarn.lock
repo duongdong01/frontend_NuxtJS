@@ -1751,6 +1751,15 @@
     "@vue/babel-plugin-transform-vue-jsx" "^1.2.1"
     camelcase "^5.0.0"
 
+"@vue/compiler-sfc@2.7.10":
+  version "2.7.10"
+  resolved "https://registry.yarnpkg.com/@vue/compiler-sfc/-/compiler-sfc-2.7.10.tgz#3fe08e780053a3bbf41328c65ae5dfdee0385206"
+  integrity sha512-55Shns6WPxlYsz4WX7q9ZJBL77sKE1ZAYNYStLs6GbhIOMrNtjMvzcob6gu3cGlfpCR4bT7NXgyJ3tly2+Hx8Q==
+  dependencies:
+    "@babel/parser" "^7.18.4"
+    postcss "^8.4.14"
+    source-map "^0.6.1"
+
 "@vue/compiler-sfc@2.7.8":
   version "2.7.8"
   resolved "https://registry.npmjs.org/@vue/compiler-sfc/-/compiler-sfc-2.7.8.tgz"
@@ -9543,6 +9552,14 @@ vue-toastification@^1.7.14:
   resolved "https://registry.yarnpkg.com/vue-toastification/-/vue-toastification-1.7.14.tgz#4d6af4085f7122463c2821a27f851898b265cc85"
   integrity sha512-khZR8t3NWZ/JJ2MZxXLbesHrRJ8AKa75PY5Zq8yMifF9x8lHq8ljYkC0d2PD9yahooygQB5tcFyRDkbbIPx8hw==
 
+vue@^2.5.17:
+  version "2.7.10"
+  resolved "https://registry.yarnpkg.com/vue/-/vue-2.7.10.tgz#ae516cc6c88e1c424754468844218fdd5e280f40"
+  integrity sha512-HmFC70qarSHPXcKtW8U8fgIkF6JGvjEmDiVInTkKZP0gIlEPhlVlcJJLkdGIDiNkIeA2zJPQTWJUI4iWe+AVfg==
+  dependencies:
+    "@vue/compiler-sfc" "2.7.10"
+    csstype "^3.1.0"
+
 vue@^2.6.12, vue@^2.6.14:
   version "2.7.8"
   resolved "https://registry.npmjs.org/vue/-/vue-2.7.8.tgz"
@@ -9550,6 +9567,13 @@ vue@^2.6.12, vue@^2.6.14:
   dependencies:
     "@vue/compiler-sfc" "2.7.8"
     csstype "^3.1.0"
+
+vuejs-smart-table@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/vuejs-smart-table/-/vuejs-smart-table-0.0.8.tgz#ab5ac61d8b5775ec3806d15dfe0a17c1613eb98e"
+  integrity sha512-NVCI2P6zGhrIjuQyHAvLxSOiGiFbfNjhlg39wljovYOKDIo62rTwtkO/TPGf9HE1RQUaXjmxUjQ26SS5v6zh3Q==
+  dependencies:
+    vue "^2.5.17"
 
 vuex@^3.6.2:
   version "3.6.2"

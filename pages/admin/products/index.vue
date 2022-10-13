@@ -9,14 +9,19 @@
       </span>
     </div>
     <hr class="text-[#ccc] mt-2 pb-3">
-    <ProductsVue />
+    <div class="flex">
+      <nuxt-link to="/admin/products/add" tag="button" class="bg-blue lg:w-28 lg:h-9 hover:opacity-90 focus:scale-110 text-white rounded-md hover:text-white focus:text-white">
+        <i class="fa-solid fa-plus text-white" /> New Product
+      </nuxt-link>
+    </div>
+    <TableProduct class="mt-4" />
   </div>
 </template>
 <script>
-import ProductsVue from '@/components/admin/products/AddProduct'
+import TableProduct from '@/components/admin/products/TableProduct'
 export default {
   components: {
-    ProductsVue
+    TableProduct
   },
   layout: 'admin',
   middleware: ['auth']

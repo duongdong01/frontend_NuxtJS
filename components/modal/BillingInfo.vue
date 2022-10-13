@@ -36,7 +36,7 @@
                 "
               />
             </a-form-model-item>
-            <a-form-model-item label="Delivery Address" prop="deliveryAddress">
+            <a-form-model-item label="Delivery address" prop="deliveryAddress">
               <a-input v-model="form.deliveryAddress" type="textarea" />
             </a-form-model-item>
           </div>

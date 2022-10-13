@@ -3,9 +3,10 @@ export default function ({ redirect }) {
   // const isAdmin = false
 
   if (resData && resData.admin) {
-    alert('bạn là admin')
+    // alert('bạn là admin')
+    console.log('Admin')
   } else {
     console.log('You can not access this page')
-    return redirect('/')
+    return redirect('/error')
   }
 }

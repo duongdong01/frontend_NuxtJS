@@ -24,7 +24,7 @@
       <terminal-icon />
     </sidenav-item>
 
-    <sidenav-item title="Recycle Bin" to="/admin/recycle-bin">
+    <sidenav-item title="Recycle Bin" to="/admin/recyclebin">
       <recycle-bin-icon />
     </sidenav-item>
 

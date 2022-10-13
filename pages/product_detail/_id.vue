@@ -23,7 +23,7 @@
           {{ product.name }} <span class="text-black text-[1rem]"><i class="far fa-eye ml-2" /> {{ product.view }} views</span>
         </h2>
         <p class="text-black font-medium text-[1rem]">
-          <a-rate v-model="product.rating" disabled allow-half />  (Rating {{ product.rating }}/5)
+          <a-rate v-model="rating" disabled allow-half />  (Rating {{ product.rating }}/5)
         </p>
         <p class="text-black font-medium text-2xl">
           ${{ product.price }} <span class="text-orange line-through ml-2">${{ product.price*1.2 }}</span>
@@ -58,7 +58,7 @@
           </p>
           <a-input-number v-model="valueNumber" :min="1" :max="number > 0? number : 1" @change="onChange" />
         </div>
-        <div class="flex cursor-pointer">
+        <div class="flex cursor-pointer" @click="saveToFavorite(product._id)">
           <i class="fa-regular hover_item fa-heart lg:text-xl text-lg text-black transition-all hover:text-orange" />
           <p class="text-black font-medium text-[1rem] ml-2">
             Add To Wishlist
@@ -92,7 +92,8 @@ export default {
       quantityArray: [],
       value: '',
       number: 0,
-      valueNumber: 1
+      valueNumber: 1,
+      rating: 0
     }
   },
   computed: {
@@ -169,43 +170,32 @@ export default {
       const restData = await this.$api.product.getProductId(this.$route.params.id)
       console.log(restData.data.result)
       this.product = { ...restData.data.result }
+      this.rating = this.roundHalf(this.product.rating)
+      // this.product.rating = this.roundHalf(this.product.rating)
       // console.log(this.product.images)
+    },
+    async saveToFavorite (id) {
+      if (this.isUserLoggedIn) {
+        try {
+          const token = localStorage.getItem('token')
+          const userData = await this.$api.auth.secret(token)
+          const wishlist = {
+            userId: userData.data._id,
+            productId: id
+          }
+          await this.$api.wishlist.addWishList(wishlist)
+          this.$toast.success('Add wishlist successfully', { timeout: 1500 })
+          this.$store.dispatch('dataWishlist')
+        } catch (error) {
+          console.log(error)
+        }
+      } else {
+        this.$store.commit('showLoginModal', true)
+      }
+    },
+    roundHalf (num) {
+      return Math.round(num * 2) / 2
     }
-    // addToCart (id) {
-    //   const data = {
-    //     id,
-    //     status: true
-    //   }
-    //   this.$store.commit('addToCart', id)
-    //   this.$store.commit('setAddedBtn', data)
-    // },
-    // removeFromCart (id) {
-    //   const data = {
-    //     id,
-    //     status: false
-    //   }
-    //   this.$store.commit('removeFromCart', id)
-    //   this.$store.commit('setAddedBtn', data)
-    // },
-    // onSelectQuantity (id) {
-    //   const data = {
-    //     id,
-    //     quantity: this.selected
-    //   }
-    //   this.$store.commit('quantity', data)
-    // },
-    // saveToFavorite (id) {
-    //   const isUserLogged = this.$store.state.userInfo.isLoggedIn
-
-    //   if (isUserLogged) {
-    //     this.$store.commit('addToFavourite', id)
-    //   } else {
-    //     this.$store.commit('showLoginModal', true)
-    //   }
-    // },
-    // removeFromFavourite (id) {
-    //   this.$store.commit('removeFromFavourite', id)
-    // }
   }
 }
 </script>

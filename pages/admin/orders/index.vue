@@ -9,14 +9,21 @@
       </span>
     </div>
     <hr class="text-[#ccc] mt-2">
-    <TabOrder class="w-full" />
+    <div class="flex justify-center">
+      <TabOrder class="w-full flex justify-center" />
+    </div>
+    <!-- <item-order class="mt-10" /> -->
   </div>
 </template>
 
 <script>
 import TabOrder from '../../../components/admin/orders/TabOrder.vue'
+// import ItemOrder from '@/components/admin/orders/TableOrder.vue'
 export default {
-  components: { TabOrder },
+  components: {
+    // ItemOrder
+    TabOrder
+  },
   layout: 'admin'
 }
 </script>

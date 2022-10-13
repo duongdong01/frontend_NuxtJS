@@ -6,7 +6,7 @@ export function isValidEmail (email) {
 
 export function isValidUserName (name) {
   // eslint-disable-next-line no-useless-escape
-  const re = /^[a-z][a-z\s]*$/
+  const re = /^[a-zA-Z][a-zA-Z\s]*$/
   return re.test(name)
 }
 export function isValidName (name) {

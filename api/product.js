@@ -10,5 +10,14 @@ export default (axios) => ({
   },
   getProductId (productId) {
     return axios.get(`/products/${productId}`)
+  },
+  getRestoreProduct () {
+    return axios.get('/products/product/bin').then(_ => _.data)
+  },
+  deleteProduct (_id) {
+    return axios.delete('/products', { data: { _id } })
+  },
+  restoreProduct (_id) {
+    return axios.put('/products/restore', { _id })
   }
 })

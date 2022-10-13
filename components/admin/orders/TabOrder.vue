@@ -1,68 +1,41 @@
-<template>
-  <div class="flex flex-col px-2">
-    <div class="tab_order-admin">
-      <a-tabs default-active-key="2a" @change="callback">
-        <!-- <a-tab-pane key="1a" tab="All Transactions">
-          <div v-if="allTransaction.totalItem<1" class="flex justify-center">
-            <p class="text-black font-medium sm:text-xl mx-0 my-10">
-              There are no bills waiting
-            </p>
-          </div>
-          <div v-for="(item,index) in allTransaction.listOrder" :key="index" class="mb-4">
-            <ItemOrder
-              :item-order="item"
-            />
-            <hr class="text-[#e8e8e8]">
-          </div>
-          <div v-if="allTransaction.totalItem>=1" class="flex justify-center">
-            <a-pagination v-model="current" :total="allTransaction.pages*8" show-less-items :page-size="8" @change="onChangeAll" />
-          </div>
-        </a-tab-pane> -->
-        <a-tab-pane key="2a" tab="Wait For Confirmation">
+<!-- <template>
+  <div class="flex flex-cols w-full">
+    <div class="tab_order-admin w-full">
+      <a-tabs default-active-key="2a" class="max-w-[50%]" @change="callback">
+        <a-tab-pane key="1" tab="Wait For Confirmation">
           <div v-if="waitForComfirm.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
               There are no bills waiting
             </p>
           </div>
-          <div v-for="(item,index) in waitForComfirm.listOrder" :key="index" class="mb-4">
-            <ItemOrder
-              :item-order="item"
-              :comfirm="true"
-            />
-            <hr class="text-[#e8e8e8]">
-          </div>
-          <div v-if="waitForComfirm.totalItem >=1" class="flex justify-center">
-            <a-pagination v-model="currentComfirm" :total="waitForComfirm.pages*8" show-less-items :page-size="8" @change="onChangeComfirm" />
-          </div>
+          <TableOrder
+            :order="waitForComfirm.listOrder"
+            :comfirm="true"
+          />
         </a-tab-pane>
-        <a-tab-pane key="3a" tab="Successful Delivery">
+        <a-tab-pane key="2" tab="Successful Delivery">
           <div v-if="itemSuccessful.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
               You have not had any successful orders yet
             </p>
           </div>
-          <div v-for="(item,index) in itemSuccessful.listOrder" :key="index" class="mb-4">
-            <ItemOrder
-              :item-order="item"
-            />
-            <hr class="text-[#e8e8e8]">
-          </div>
+          <TableOrder
+            :order="itemSuccessful.listOrder"
+          />
           <div v-if="itemSuccessful.totalItem>=1" class="flex justify-center">
             <a-pagination v-model="currentSuccess" :total="itemSuccessful.pages*8" show-less-items :page-size="8" @change="onChangeSuccess" />
           </div>
         </a-tab-pane>
-        <a-tab-pane key="4a" tab="Order Canceled">
+        <a-tab-pane key="3" tab="Order Canceled">
           <div v-if="itemCanceled.totalItem<1" class="flex justify-center">
             <p class="text-black font-medium sm:text-xl mx-0 my-10">
               No orders have been canceled
             </p>
           </div>
-          <div v-for="(item,index) in itemCanceled.listOrder" :key="index" class="mb-4">
-            <ItemOrder
-              :item-order="item"
-            />
-            <hr class="text-[#e8e8e8]">
-          </div>
+
+          <TableOrder
+            :order="itemCanceled.listOrder"
+          />
           <div v-if="itemCanceled.totalItem >=1" class="flex justify-center">
             <a-pagination v-model="currentCancel" :total="itemCanceled.pages*8" show-less-items :page-size="8" @change="onChangeCancel" />
           </div>
@@ -70,15 +43,62 @@
       </a-tabs>
     </div>
   </div>
+</template> -->
+<template>
+  <div class="flex flex-wrap">
+    <div class="w-full">
+      <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
+        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal " :class="{'text-[#db2777] hover:text-[#db2777] bg-white': openTab !== 1, 'text-white hover:text-white bg-[#db2777]': openTab === 1}" @click="toggleTabs(1)">
+            Wait For Confirmation
+          </a>
+        </li>
+        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" :class="{'text-[#db2777]  hover:text-[#db2777] bg-white': openTab !== 2, 'text-white  hover:text-white bg-[#db2777]': openTab === 2}" @click="toggleTabs(2)">
+            Successful Delivery
+          </a>
+        </li>
+        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" :class="{'text-[#db2777] hover:text-[#db2777] bg-white': openTab !== 3, 'text-white hover:text-white bg-[#db2777]': openTab === 3}" @click="toggleTabs(3)">
+            Order Canceled
+          </a>
+        </li>
+      </ul>
+      <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+        <div class="px-4 py-5 flex-auto">
+          <div class="tab-content tab-space">
+            <div :class="{'hidden': openTab !== 1, 'block': openTab === 1}">
+              <TableOrder
+                :order="waitForComfirm.listOrder"
+                :comfirm="true"
+              />
+            </div>
+            <div :class="{'hidden': openTab !== 2, 'block': openTab === 2}">
+              <TableOrder
+                :order="itemSuccessful.listOrder"
+              />
+            </div>
+            <div :class="{'hidden': openTab !== 3, 'block': openTab === 3}">
+              <TableOrder
+                :order="itemCanceled.listOrder"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
-import ItemOrder from '@/components/admin/orders/TableOrder.vue'
+import TableOrder from '@/components/admin/orders/TableOrder.vue'
 export default {
   components: {
-    ItemOrder
+    TableOrder
+
   },
   data () {
     return {
+      openTab: 1,
       current: 1,
       currentComfirm: 1,
       currentSuccess: 1,
@@ -91,11 +111,14 @@ export default {
   },
   mounted () {
     // this.getAllTransaction(8, 1)
-    this.getWaitForComfirm(8, 1)
-    this.getSuccessful(8, 1)
-    this.getCanceled(8, 1)
+    this.getWaitForComfirm(100, 1)
+    this.getSuccessful(100, 1)
+    this.getCanceled(100, 1)
   },
   methods: {
+    toggleTabs (tabNumber) {
+      this.openTab = tabNumber
+    },
     callback (key) {
       console.log(key)
     },
@@ -112,6 +135,7 @@ export default {
       try {
         const dataOrder = await this.$api.order.getOrderAdmin({ cancel: 0, status: 0, limit, page })
         this.waitForComfirm = dataOrder.listOrder
+        console.log(this.waitForComfirm)
       } catch (error) {
         console.log(error)
       }
@@ -128,6 +152,7 @@ export default {
       try {
         const dataOrder = await this.$api.order.getOrderAdmin({ cancel: 1, limit, page })
         this.itemCanceled = dataOrder.listOrder
+        console.log(this.itemCanceled)
       } catch (error) {
         console.log(error)
       }
@@ -152,37 +177,8 @@ export default {
   }
 }
 </script>
-
-  <style lang="scss">
-  .tab_order-admin{
-
-      .ant-tabs-nav-wrap{
-          @apply mt-3;
-      }
-      .ant-tabs-bar{
-          @apply border-0
-      }
-      .ant-tabs-nav-scroll{
-          @apply w-full flex justify-center;
-
-      }
-      .ant-tabs-nav .ant-tabs-tab-active{
-          @apply text-orange;
-      }
-      .ant-tabs-tab{
-          @apply font-semibold text-black text-[1rem] leading-6;
-      }
-      .ant-tabs-tab:hover {
-          @apply text-orange
-      }
-      .ant-tabs-tab-active{
-          @apply text-orange
-      }
-      .ant-tabs-ink-bar{
-          @apply bg-orange
-      }
-      .ant-tabs-nav .ant-tabs-tab:hover{
-          @apply text-orange
-      }
-  }
-  </style>
+<style lang="scss">
+// .leading-normal{
+//     @apply hover:text-orange
+// }
+</style>

@@ -21,8 +21,16 @@
         </li>
       </ul>
     </a-menu-item>
-    <a-menu-item key="3">
-      BLOG
+    <a-menu-item key="3" class="relative sub_shop">
+      PAGES<a-icon type="down" class="absolute leading-[78px] font-medium pl-[1px]" />
+      <ul class="hidden absolute bg-[#fef5ef] item-menu_shop">
+        <nuxt-link to="/cart" tag="li">
+          View Cart
+        </nuxt-link>
+        <nuxt-link to="/wishlist" tag="li">
+          View WishList
+        </nuxt-link>
+      </ul>
     </a-menu-item>
     <a-menu-item key="4">
       <nuxt-link to="/contact" tag="li">

@@ -42,7 +42,7 @@
         <p class="text-2xl font-semibold text-orange">
           ${{ product.price }}
         </p>
-        <div class="flex cursor-pointer">
+        <div class="flex cursor-pointer" @click="saveToFavorite(product._id)">
           <i class="fa-regular hover_item fa-heart lg:text-xl text-lg text-black transition-all hover:text-orange" />
           <p class="text-black font-medium text-[1rem] ml-2">
             Add To Wishlist
@@ -72,7 +72,7 @@ export default {
   props: ['product'],
   data () {
     return {
-      rating: this.product.rating
+      rating: this.roundHaft(this.product.rating)
     }
   },
   computed: {
@@ -103,8 +103,30 @@ export default {
         this.$store.commit('showLoginModal', true)
       }
     },
+    async saveToFavorite (id) {
+      if (this.isUserLogged) {
+        try {
+          const token = localStorage.getItem('token')
+          const userData = await this.$api.auth.secret(token)
+          const wishlist = {
+            userId: userData.data._id,
+            productId: id
+          }
+          await this.$api.wishlist.addWishList(wishlist)
+          this.$toast.success('Add wishlist successfully', { timeout: 1500 })
+          this.$store.dispatch('dataWishlist')
+        } catch (error) {
+          console.log(error)
+        }
+      } else {
+        this.$store.commit('showLoginModal', true)
+      }
+    },
     showQuickView () {
       this.$refs.quickModal.showModal()
+    },
+    roundHaft (num) {
+      return Math.round(num * 2) / 2
     }
   }
 }

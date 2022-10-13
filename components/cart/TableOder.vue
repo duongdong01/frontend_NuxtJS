@@ -261,6 +261,7 @@ export default {
     async editItem (idCartItem) {
       try {
         this.loading = true
+        console.log('loading : ', this.loading)
         const token = localStorage.getItem('token')
         const userData = await this.$api.auth.secret(token)
         const sizeUpdate = this.selectedSize.find((item) => {
@@ -302,7 +303,7 @@ export default {
         this.$toast.error('System error please try again later', { timeout: 1500 })
         console.log(error)
       } finally {
-        this.loading = false
+        // this.loading = false
       }
     },
     async deleteCarts () {

@@ -1,4 +1,5 @@
 import Comment from '../api/comment'
+import User from '@/api/user'
 import Auth from '@/api/auth'
 import Product from '@/api/product'
 import Cart from '@/api/cart'
@@ -12,7 +13,8 @@ export default (context, inject) => {
     comment: Comment(context.$axios),
     cart: Cart(context.$axios),
     order: Order(context.$axios),
-    wishlist: WishList(context.$axios)
+    wishlist: WishList(context.$axios),
+    user: User(context.$axios)
   }
 
   // Inject $api
